@@ -200,6 +200,7 @@ ModelImporter:
     4300004: pCylinder3
     7400000: PrayRepeat
     9500000: //RootNode
+    11100000: //RootNode
     13700000: Follower
     13700002: pCylinder2
     13700004: pCylinder3
@@ -472,6 +473,6 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 1
   additionalBone: 0
   userData: 

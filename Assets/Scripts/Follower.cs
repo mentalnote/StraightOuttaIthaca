@@ -3,7 +3,7 @@ using TreeEditor;
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(SkinnedMeshRenderer))]
 public class Follower : MonoBehaviour {
 
     public enum State
@@ -35,7 +35,7 @@ public class Follower : MonoBehaviour {
     private State _state;
 
     [SerializeField]
-    private MeshRenderer _meshRenderer;
+    private SkinnedMeshRenderer _meshRenderer;
 
     [SerializeField]
     private Material _transparentMat;
@@ -49,12 +49,15 @@ public class Follower : MonoBehaviour {
     [SerializeField] 
     private DamageScript _damageScript;
 
+    [SerializeField] 
+    private Animation _animation;
+
     private float _currentStateTime;
     private Vector3[] _exitPoints;
     private Vector3[] _prayPoints;
     private Vector3 _destination;
     private bool _hasDestination;
-    private State _previousState;
+    private State _previousState = State.Leaving;
     private float _speed;
     private GameObject sourceOfFear;
     private Idol _idol;
@@ -78,6 +81,7 @@ public class Follower : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
+        _animation.wrapMode = WrapMode.Loop;
 	    _speed = _navAgent.speed;
 	    GameObject exits = GameObject.Find("Exits");
 	    if (exits != null && exits.transform.childCount > 0)
@@ -118,7 +122,7 @@ public class Follower : MonoBehaviour {
 	        case State.Leaving:
 	            if (_currentStateTime == 0.0f)
 	            {
-                    animation.CrossFade("walk");
+                    _animation.CrossFade("Walk");
                     if (!_hasDestination)
                     {
                         if (_exitPoints != null)
@@ -155,7 +159,7 @@ public class Follower : MonoBehaviour {
             case State.Fleeing:
 	            if (_currentStateTime == 0.0f)
 	            {
-                    animation.CrossFade("run");
+                    _animation.CrossFade("Run");
 	                if (sourceOfFear != null)
 	                {
 	                    Vector3 runDirection = sourceOfFear.transform.position - transform.position;
@@ -178,7 +182,8 @@ public class Follower : MonoBehaviour {
             case State.Returning:
                 if (_currentStateTime == 0.0f)
 	            {
-                    animation.CrossFade("walk");
+                    print("go");
+                    _animation.CrossFade("Walk");
                     if (!_hasDestination)
                     {
                         if (_prayPoints != null)
@@ -198,8 +203,8 @@ public class Follower : MonoBehaviour {
 	            break;
             case State.Praying:
                 if (_currentStateTime == 0.0f)
-	            {
-                    animation.CrossFade("walk");
+                {
+                    _animation.CrossFade("Walk");
 	                if (_idol != null)
 	                {
 	                    _hasDestination = true;
@@ -217,8 +222,8 @@ public class Follower : MonoBehaviour {
                     {
                         if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
                         {
-                            animation.CrossFade("StartPray");
-                            animation.PlayQueued("PrayRepeat");
+                            _animation.CrossFade("StartPray");
+                            _animation.PlayQueued("PrayRepeat");
                         }
                     }
                 }
@@ -226,6 +231,7 @@ public class Follower : MonoBehaviour {
             case State.Dead:
                 if (_currentStateTime == 0.0f)
                 {
+                    Destroy(gameObject);
                     _audioSource.clip = null;
                     //_audioSource.Play();
                 }
