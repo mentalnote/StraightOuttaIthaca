@@ -2611,6 +2611,14 @@ Prefab:
       propertyPath: m_Name
       value: ThunderBtn
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2109279030}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetSelectedGodPower
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
   m_RootGameObject: {fileID: 593129583}
@@ -4451,7 +4459,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2109279030}
         m_MethodName: SetSelectedGodPower
         m_Mode: 5
         m_Arguments:
@@ -7390,8 +7398,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SetSelectedGodPower
+      - m_Target: {fileID: 2109279029}
+        m_MethodName: 
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7399,7 +7407,7 @@ MonoBehaviour:
             Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Thunder
+          m_StringArgument: Fireball
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -9609,6 +9617,18 @@ Prefab:
       value: 'fireball
 
 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2109279029}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Fireball
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
