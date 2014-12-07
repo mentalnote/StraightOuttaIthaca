@@ -594,7 +594,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c9fd47c7cbcc04ef1b2a6dd4641e3c8d, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c9fd47c7cbcc04ef1b2a6dd4641e3c8d, type: 2}
       propertyPath: m_LocalScale.x
@@ -2527,7 +2527,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
 --- !u!1001 &393477151
 Prefab:
   m_ObjectHideFlags: 0
@@ -2619,6 +2619,19 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetSelectedGodPower
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 100000, guid: 410c751cf9a922c45847240b38151e85, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
   m_RootGameObject: {fileID: 593129583}
@@ -3849,7 +3862,7 @@ Transform:
   m_LocalScale: {x: 30, y: 1, z: 30}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1001 &425715391
 Prefab:
   m_ObjectHideFlags: 0
@@ -3887,7 +3900,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: a15d1c97214f842febf50805ee0eb607, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: a15d1c97214f842febf50805ee0eb607, type: 2}
       propertyPath: m_LocalScale.x
@@ -4087,7 +4100,7 @@ RectTransform:
   - {fileID: 1732931267}
   - {fileID: 436866092}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -4380,7 +4393,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!1 &593129583
 GameObject:
   m_ObjectHideFlags: 0
@@ -4461,10 +4474,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2109279030}
         m_MethodName: SetSelectedGodPower
-        m_Mode: 5
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+          m_ObjectArgument: {fileID: 100000, guid: 410c751cf9a922c45847240b38151e85,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -5968,6 +5982,27 @@ Prefab:
       propertyPath: m_Text
       value: cyclone
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2109279030}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetSelectedGodPower
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 100000, guid: 4249d0ffb0c80f94296aa088b14b95cc, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
   m_RootGameObject: {fileID: 1455672867}
@@ -6598,7 +6633,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22400014, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 22400014, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -7398,12 +7433,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109279029}
-        m_MethodName: 
-        m_Mode: 5
+      - m_Target: {fileID: 2109279030}
+        m_MethodName: SetSelectedGodPower
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+          m_ObjectArgument: {fileID: 100000, guid: fecb940b6fe47574dbb9973842417c99,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -7732,12 +7768,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2109279030}
         m_MethodName: SetSelectedGodPower
-        m_Mode: 5
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+          m_ObjectArgument: {fileID: 100000, guid: 4249d0ffb0c80f94296aa088b14b95cc,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -8902,7 +8939,7 @@ RectTransform:
   - {fileID: 957704796}
   - {fileID: 2091723595}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -9514,7 +9551,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4eabfc8968deaf545b1767b0b656119c, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 4eabfc8968deaf545b1767b0b656119c, type: 2}
       propertyPath: _godPowerEntries.Array.data[4].Visual
@@ -9621,15 +9658,28 @@ Prefab:
     - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2109279029}
+      objectReference: {fileID: 2109279030}
     - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: SetSelectedGodPower
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: Fireball
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 100000, guid: fecb940b6fe47574dbb9973842417c99, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dda8f7f5b26cde44e9ec0cdd01abb0d0, type: 2}
   m_RootGameObject: {fileID: 1424206541}
@@ -9733,7 +9783,7 @@ Transform:
   m_Children:
   - {fileID: 140649903}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!199 &2024556347
 ParticleSystemRenderer:
   m_ObjectHideFlags: 0
@@ -11026,28 +11076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87bcf40f533993e47b414ee2b18afb3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _godPowerEntries:
-  - PowerType: 1
-    Visual: {fileID: 100012, guid: bf2d0b8833ec1440d97c8a40024ea2fe, type: 2}
-  - PowerType: 2
-    Visual: {fileID: 100000, guid: 1e0db9faa9a214eed9711548bc312b93, type: 2}
-  - PowerType: 3
-    Visual: {fileID: 100010, guid: 92f47ff0220244c049d7b275a9078312, type: 2}
-  - PowerType: 4
-    Visual: {fileID: 100000, guid: 54c1f14ea7dd6411fba51da65c868cb3, type: 2}
-  - PowerType: 5
-    Visual: {fileID: 0}
-  - PowerType: 10
-    Visual: {fileID: 100004, guid: eb94a6bab2d114df2a40f18350365d0d, type: 2}
-  - PowerType: 6
-    Visual: {fileID: 100010, guid: 851a222434a3c468f8fbe2400898caf8, type: 2}
-  - PowerType: 7
-    Visual: {fileID: 100004, guid: 8b0d60950a95d47eb8432abf5ebce7bb, type: 2}
-  - PowerType: 8
-    Visual: {fileID: 0}
-  - PowerType: 9
-    Visual: {fileID: 100008, guid: 656289dc576d94aef8ea0bf441ffb2f9, type: 2}
-  _selectedGodPower: 0
+  _selectedGodPower: {fileID: 0}
 --- !u!4 &2109279031
 Transform:
   m_ObjectHideFlags: 0
@@ -11059,4 +11088,4 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
