@@ -49,16 +49,22 @@ public class Follower : MonoBehaviour {
     [SerializeField] 
     private DamageScript _damageScript;
 
-
     private float _currentStateTime;
     private Vector3[] _exitPoints;
     private Vector3[] _prayPoints;
     private Vector3 _destination;
     private bool _hasDestination;
     private State _previousState;
-    private float speed;
+    private float _speed;
     private GameObject sourceOfFear;
+    private Idol _idol;
 
+
+    public void SetIdol(Idol idolScript)
+    {
+        _idol = idolScript;
+        FollowerState = State.Praying;
+    }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -72,7 +78,7 @@ public class Follower : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-	    speed = _navAgent.speed;
+	    _speed = _navAgent.speed;
 	    GameObject exits = GameObject.Find("Exits");
 	    if (exits != null && exits.transform.childCount > 0)
 	    {
@@ -112,6 +118,7 @@ public class Follower : MonoBehaviour {
 	        case State.Leaving:
 	            if (_currentStateTime == 0.0f)
 	            {
+                    animation.CrossFade("walk");
                     if (!_hasDestination)
                     {
                         if (_exitPoints != null)
@@ -119,6 +126,7 @@ public class Follower : MonoBehaviour {
                             _destination = _exitPoints[Random.Range(0, _exitPoints.Length)];
                             _navAgent.SetDestination(_destination);
                             _hasDestination = true;
+                            
                         }
                     }
 	            }
@@ -140,18 +148,19 @@ public class Follower : MonoBehaviour {
 	            }
 	            if (_currentStateTime >= 4.0f)
 	            {
-	                _navAgent.speed = speed;
+	                _navAgent.speed = _speed;
                     FollowerState = _previousState;
 	            }
 	            break;
             case State.Fleeing:
 	            if (_currentStateTime == 0.0f)
 	            {
+                    animation.CrossFade("run");
 	                if (sourceOfFear != null)
 	                {
 	                    Vector3 runDirection = sourceOfFear.transform.position - transform.position;
 	                    _navAgent.SetDestination(transform.position + (runDirection.normalized * 50));
-	                    _navAgent.speed = speed*1.5f;
+	                    _navAgent.speed = _speed*1.5f;
 	                    _hasDestination = true;
 	                }
 	                else
@@ -162,13 +171,14 @@ public class Follower : MonoBehaviour {
 	            if (_currentStateTime >= 4.0f)
 	            {
                     _hasDestination = false;
-                    _navAgent.speed = speed;
+                    _navAgent.speed = _speed;
                     FollowerState = _previousState;
 	            }
 	            break;
             case State.Returning:
                 if (_currentStateTime == 0.0f)
 	            {
+                    animation.CrossFade("walk");
                     if (!_hasDestination)
                     {
                         if (_prayPoints != null)
@@ -179,16 +189,6 @@ public class Follower : MonoBehaviour {
                         }
                     }
 	            }
-                if (!_navAgent.pathPending)
-                {
-                    if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
-                    {
-                        if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
-                        {
-                            FollowerState = State.Praying;
-                        }
-                    }
-                }
                 break;
             case State.GettingBlown:
 	            if (_currentStateTime == 0.0f)
@@ -197,6 +197,31 @@ public class Follower : MonoBehaviour {
 	            }
 	            break;
             case State.Praying:
+                if (_currentStateTime == 0.0f)
+	            {
+                    animation.CrossFade("walk");
+	                if (_idol != null)
+	                {
+	                    _hasDestination = true;
+	                    _destination = _idol.ClaimPositionOfPraise();
+	                    _navAgent.SetDestination(_destination);
+	                }
+	                else
+	                {
+	                    FollowerState = _previousState;
+	                }
+	            }
+                if (!_navAgent.pathPending)
+                {
+                    if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
+                    {
+                        if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
+                        {
+                            animation.CrossFade("StartPray");
+                            animation.PlayQueued("PrayRepeat");
+                        }
+                    }
+                }
 	            break;
             case State.Dead:
                 if (_currentStateTime == 0.0f)
