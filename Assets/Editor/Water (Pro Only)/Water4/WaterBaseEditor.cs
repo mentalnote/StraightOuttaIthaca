@@ -140,7 +140,7 @@ public class WaterBaseEditor : Editor
 				float fresnelScale = EditorGUILayout.Slider("Intensity", WaterEditorUtility.GetMaterialFloat("_FresnelScale", oceanMaterial), 0.1F, 4.0F);
 				WaterEditorUtility.SetMaterialFloat("_FresnelScale", fresnelScale, oceanMaterial);
 			}			
-			displacementParameter.z = EditorGUILayout.Slider("Power", displacementParameter.z, 0.1F, 10.0F);
+			displacementParameter.z = EditorGUILayout.Slider("PowerType", displacementParameter.z, 0.1F, 10.0F);
 			displacementParameter.w = EditorGUILayout.Slider("Bias", displacementParameter.w, -3.0F, 3.0F);
 		}
 		else

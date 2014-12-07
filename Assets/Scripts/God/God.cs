@@ -18,8 +18,8 @@ namespace Assets.Scripts.God
         //the stat which controls whether you can use your god powers or not
         private float _godGlory = 100;
 
-        //the list of GodPowers that you have available to you at this level of godliness
-        private HashSet<GodPower> _godPowers;
+        //the list of GodPowerType that you have available to you at this level of godliness
+        private HashSet<IGodPower> _godPowers;
 
         //your current level of godliness
         private GodLevels _godLevel = GodLevels.FalseProhphet;
@@ -55,7 +55,7 @@ namespace Assets.Scripts.God
         /**
          * Try to use one of your god powers 
          */
-        public void UsePower(GodPower godPower)
+        public void UsePower(IGodPower godPower)
         {
             //see if you can afford this power and also that you actually have this power
             if (godPower.GetCost() <= _godGlory && _godPowers.Contains(godPower))
