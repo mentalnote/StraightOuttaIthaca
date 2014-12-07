@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Configuration;
+using TreeEditor;
+using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(MeshRenderer))]
@@ -22,6 +24,7 @@ public class Follower : MonoBehaviour {
         {
             if (_state != value)
             {
+                _previousState = _state;
                 _state = value;
                 _currentStateTime = 0.0f;
             }
@@ -43,21 +46,62 @@ public class Follower : MonoBehaviour {
     [SerializeField] 
     private NavMeshAgent _navAgent;
 
+    [SerializeField] 
+    private DamageScript _damageScript;
+
+
     private float _currentStateTime;
-    private Vector3[] exitPoints;
-    private Vector3 destination;
+    private Vector3[] _exitPoints;
+    private Vector3[] _prayPoints;
+    private Vector3 _destination;
+    private bool _hasDestination;
+    private State _previousState;
+    private float speed;
+    private GameObject sourceOfFear;
+
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (FollowerState == State.GettingBlown && _damageScript != null)
+        {
+            _damageScript.applyDamage(DamageScript.DamageType.PHYSICAL, Mathf.Clamp(rigidbody.velocity.magnitude * 20.0f, 0.0f, 80.0f));
+            FollowerState = _previousState;
+        }
+    }
 
 	// Use this for initialization
 	void Start ()
 	{
+	    speed = _navAgent.speed;
 	    GameObject exits = GameObject.Find("Exits");
 	    if (exits != null && exits.transform.childCount > 0)
 	    {
-            exitPoints = new Vector3[exits.transform.childCount];
+            _exitPoints = new Vector3[exits.transform.childCount];
 	        for (int i = 0; i < exits.transform.childCount; i++)
 	        {
-	            exitPoints[i] = exits.transform.GetChild(i).position;
+	            _exitPoints[i] = exits.transform.GetChild(i).position;
 	        }
+	    }
+
+        GameObject prayZones = GameObject.Find("PrayZones");
+        if (prayZones != null && prayZones.transform.childCount > 0)
+        {
+            _prayPoints = new Vector3[prayZones.transform.childCount];
+            for (int i = 0; i < prayZones.transform.childCount; i++)
+            {
+                _prayPoints[i] = prayZones.transform.GetChild(i).position;
+            }
+        }
+
+	    if (_damageScript != null)
+	    {
+	        _damageScript.addDamageListener((damage, health) =>
+	                                        {
+	                                            if (health <= 0)
+	                                            {
+	                                                _state = State.Dead;
+	                                            }
+	                                        });
 	    }
 	}
 	
@@ -68,16 +112,91 @@ public class Follower : MonoBehaviour {
 	        case State.Leaving:
 	            if (_currentStateTime == 0.0f)
 	            {
+                    if (!_hasDestination)
+                    {
+                        if (_exitPoints != null)
+                        {
+                            _destination = _exitPoints[Random.Range(0, _exitPoints.Length)];
+                            _navAgent.SetDestination(_destination);
+                            _hasDestination = true;
+                        }
+                    }
 	            }
-	            if (_currentStateTime >= 3f && _currentStateTime - Time.deltaTime <= 3f)
+                if (!_navAgent.pathPending)
+                {
+                    if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
+                    {
+                        if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
+                        {
+                            FollowerState = State.Dead;
+                        }
+                    }
+                }
+	            break;
+            case State.Dazed:
+	            if (_currentStateTime == 0.0f)
 	            {
+	                _navAgent.speed = 0.0f;
 	            }
-	            if (_currentStateTime > 10.0f)
+	            if (_currentStateTime >= 4.0f)
 	            {
-	                FollowerState = State.Dazed;
-	                break;
+	                _navAgent.speed = speed;
+                    FollowerState = _previousState;
 	            }
-	            _currentStateTime += Time.deltaTime;
+	            break;
+            case State.Fleeing:
+	            if (_currentStateTime == 0.0f)
+	            {
+	                if (sourceOfFear != null)
+	                {
+	                    Vector3 runDirection = sourceOfFear.transform.position - transform.position;
+	                    _navAgent.SetDestination(transform.position + (runDirection.normalized * 50));
+	                    _navAgent.speed = speed*1.5f;
+	                    _hasDestination = true;
+	                }
+	                else
+	                {
+                        FollowerState = _previousState;
+	                }    
+	            }
+	            if (_currentStateTime >= 4.0f)
+	            {
+                    _hasDestination = false;
+                    _navAgent.speed = speed;
+                    FollowerState = _previousState;
+	            }
+	            break;
+            case State.Returning:
+                if (_currentStateTime == 0.0f)
+	            {
+                    if (!_hasDestination)
+                    {
+                        if (_prayPoints != null)
+                        {
+                            _destination = _prayPoints[Random.Range(0, _prayPoints.Length)];
+                            _navAgent.SetDestination(_destination);
+                            _hasDestination = true;
+                        }
+                    }
+	            }
+                if (!_navAgent.pathPending)
+                {
+                    if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
+                    {
+                        if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
+                        {
+                            FollowerState = State.Praying;
+                        }
+                    }
+                }
+                break;
+            case State.GettingBlown:
+	            if (_currentStateTime == 0.0f)
+	            {
+	                //animation
+	            }
+	            break;
+            case State.Praying:
 	            break;
             case State.Dead:
                 if (_currentStateTime == 0.0f)
@@ -102,5 +221,6 @@ public class Follower : MonoBehaviour {
                 }
                 break;
 	    }
+        _currentStateTime += Time.deltaTime;
 	}
 }
