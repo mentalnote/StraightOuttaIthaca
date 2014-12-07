@@ -19,7 +19,7 @@ public class FollowerSpawner : MonoBehaviour
 	void Update () {
 	    if (!_stop && _prefab != null)
 	    {
-	        if (_timeSinceLastSpawn > (_spawnPerMinute/60.0f))
+            if (_timeSinceLastSpawn > (60.0f /_spawnPerMinute))
 	        {
 	            GameObject follower = (GameObject)Instantiate(_prefab, transform.position, transform.rotation);
 	            Follower followerScript = follower.GetComponent<Follower>();

@@ -11,9 +11,9 @@ public class Idol : MonoBehaviour
     private Vector3 _offsetPosition;
     private float _breadthOffset;
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collider)
     {
-        Follower followerScript = collision.gameObject.GetComponent<Follower>();
+        Follower followerScript = collider.gameObject.GetComponent<Follower>();
         if (followerScript != null)
         {
            followerScript.SetIdol(this);
@@ -28,10 +28,18 @@ public class Idol : MonoBehaviour
 
     public Vector3 ClaimPositionOfPraise()
     {
-        int row = _currentWorshippers == 0 ? 0 : _columns/_currentWorshippers;
-        int column = _columns%_currentWorshippers;
+        int row = _currentWorshippers == 0 ? 0 : _currentWorshippers / _columns;
+        int column = _currentWorshippers == 0 ? 0 : _currentWorshippers % _columns;
         _currentWorshippers++;
         int spacingCoefficient = column/2;
+        print("row: " + row);
+        print("column: " + column);
+        print("spacing coefficient: " + spacingCoefficient);
+        Vector3 temp = _currentWorshippers%2 == 0
+            ? _offsetPosition + new Vector3(row*_spacing, 0, spacingCoefficient*_spacing + _breadthOffset)
+            : _offsetPosition + new Vector3(row*_spacing, 0, -spacingCoefficient*_spacing + _breadthOffset);
+        print("end result: " + temp);
+        print("----------------------------------");
         return _currentWorshippers%2 == 0
             ? _offsetPosition + new Vector3(row*_spacing, 0, spacingCoefficient*_spacing + _breadthOffset)
             : _offsetPosition + new Vector3(row * _spacing, 0, -spacingCoefficient * _spacing + _breadthOffset);

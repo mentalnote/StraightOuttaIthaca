@@ -3,7 +3,6 @@ using TreeEditor;
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(SkinnedMeshRenderer))]
 public class Follower : MonoBehaviour {
 
     public enum State
@@ -81,6 +80,7 @@ public class Follower : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
+	    _animation["Walk"].speed = 2f;
         _animation.wrapMode = WrapMode.Loop;
 	    _speed = _navAgent.speed;
 	    GameObject exits = GameObject.Find("Exits");
@@ -109,7 +109,7 @@ public class Follower : MonoBehaviour {
 	                                        {
 	                                            if (health <= 0)
 	                                            {
-	                                                _state = State.Dead;
+	                                                FollowerState = State.Dead;
 	                                            }
 	                                        });
 	    }
@@ -122,7 +122,7 @@ public class Follower : MonoBehaviour {
 	        case State.Leaving:
 	            if (_currentStateTime == 0.0f)
 	            {
-                    _animation.CrossFade("Walk");
+                    _animation.Play("Walk");
                     if (!_hasDestination)
                     {
                         if (_exitPoints != null)
@@ -140,7 +140,8 @@ public class Follower : MonoBehaviour {
                     {
                         if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
                         {
-                            FollowerState = State.Dead;
+                            Destroy(gameObject);
+                            //FollowerState = State.Dead;
                         }
                     }
                 }
@@ -182,7 +183,6 @@ public class Follower : MonoBehaviour {
             case State.Returning:
                 if (_currentStateTime == 0.0f)
 	            {
-                    print("go");
                     _animation.CrossFade("Walk");
                     if (!_hasDestination)
                     {
@@ -209,6 +209,7 @@ public class Follower : MonoBehaviour {
 	                {
 	                    _hasDestination = true;
 	                    _destination = _idol.ClaimPositionOfPraise();
+                        Debug.DrawLine(_destination, new Vector3(_destination.x, _destination.y + 100, _destination.z), Color.magenta, 1000000f);
 	                    _navAgent.SetDestination(_destination);
 	                }
 	                else
@@ -222,7 +223,8 @@ public class Follower : MonoBehaviour {
                     {
                         if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
                         {
-                            _animation.CrossFade("StartPray");
+                            _animation["PrayStart"].wrapMode = WrapMode.Once;
+                            _animation.CrossFade("PrayStart");
                             _animation.PlayQueued("PrayRepeat");
                         }
                     }
@@ -231,7 +233,7 @@ public class Follower : MonoBehaviour {
             case State.Dead:
                 if (_currentStateTime == 0.0f)
                 {
-                    Destroy(gameObject);
+                    _animation.CrossFade("Death");
                     _audioSource.clip = null;
                     //_audioSource.Play();
                 }
