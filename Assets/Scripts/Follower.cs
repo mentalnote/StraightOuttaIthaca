@@ -40,11 +40,25 @@ public class Follower : MonoBehaviour {
     [SerializeField] 
     private AudioSource _audioSource;
 
+    [SerializeField] 
+    private NavMeshAgent _navAgent;
+
     private float _currentStateTime;
+    private Vector3[] exitPoints;
+    private Vector3 destination;
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start ()
+	{
+	    GameObject exits = GameObject.Find("Exits");
+	    if (exits != null && exits.transform.childCount > 0)
+	    {
+            exitPoints = new Vector3[exits.transform.childCount];
+	        for (int i = 0; i < exits.transform.childCount; i++)
+	        {
+	            exitPoints[i] = exits.transform.GetChild(i).position;
+	        }
+	    }
 	}
 	
 	// Update is called once per frame
