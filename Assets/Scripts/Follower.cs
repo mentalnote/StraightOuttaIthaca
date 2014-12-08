@@ -75,9 +75,6 @@ public class Follower : MonoBehaviour {
     private FaithTracker _faithtracker;
 
     [SerializeField] 
-    private SceneArea _villageArea;
-
-    [SerializeField] 
     private Animation _animation;
 
     private float _currentStateTime;
@@ -89,6 +86,7 @@ public class Follower : MonoBehaviour {
     private float _speed;
     private GameObject sourceOfFear;
     private Idol _idol;
+    private SceneArea _villageArea;
 
     public void BlowAwayFrom(Vector3 position, float force, float radius)
     {
@@ -177,6 +175,8 @@ public class Follower : MonoBehaviour {
                 _prayPoints[i] = prayZones.transform.GetChild(i).position;
             }
         }
+
+	    _villageArea = GameObject.Find("VillageArea").GetComponent<SceneArea>();
 
 	    if (_damageScript != null)
 	    {
