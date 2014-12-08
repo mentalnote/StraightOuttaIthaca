@@ -9,6 +9,7 @@ public class Zeppelin : MonoBehaviour {
 		dropping,
 		dropped
 	}
+
 	[SerializeField]
 	private GameObject people;
 	[SerializeField]
@@ -31,8 +32,7 @@ public class Zeppelin : MonoBehaviour {
 		targetPosition = dropLocation;
 		int count = 0;
 		numberOfPeople = 4;
-	}
-	
+	}	
 	void setNumberOfPeople(int number){
 		numberOfPeople = number;
 	}
@@ -52,7 +52,6 @@ public class Zeppelin : MonoBehaviour {
 				if (count < droppingDuration){
 					int dropIntervals = droppingDuration/numberOfPeople;
 					if (count % dropIntervals == 0){
-						print ("yo");
 						Vector3 position = new Vector3(transform.position.x,transform.position.y-20,transform.position.z);
 						Instantiate(people,position,Quaternion.identity);
 					}
@@ -70,17 +69,6 @@ public class Zeppelin : MonoBehaviour {
 				}
 				break;
 		}
-
 		transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
-
 	}
-
-
-
-
-
-
-	//Move towards location, drop, 
-
-
 }
