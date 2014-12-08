@@ -13,7 +13,9 @@ public class Follower : MonoBehaviour {
         Praying,
         Returning,
         Fleeing,
-        GettingBlown
+        GettingBlown,
+        Wandering,
+        Dropping
     }
 
     public State FollowerState
@@ -71,6 +73,9 @@ public class Follower : MonoBehaviour {
 
     [SerializeField] 
     private FaithTracker _faithtracker;
+
+    [SerializeField] 
+    private SceneArea _villageArea;
 
     [SerializeField] 
     private Animation _animation;
@@ -141,6 +146,10 @@ public class Follower : MonoBehaviour {
             _damageScript.applyDamage(DamageScript.DamageType.PHYSICAL, Mathf.Clamp(rigidbody.velocity.magnitude * 20.0f, 0.0f, 80.0f));
             FollowerState = _previousState;
         }
+        if (FollowerState == State.Dropping)
+        {
+            FollowerState = State.Wandering;
+        }
     }
 
 	// Use this for initialization
@@ -187,6 +196,7 @@ public class Follower : MonoBehaviour {
         switch (FollowerState)
 	    {
 	        case State.Leaving:
+                _navAgent.speed = _speed;
 	            if (_faithtracker != null && _faithtracker.Converted)
 	            {
 	                _hasDestination = false;
@@ -217,6 +227,49 @@ public class Follower : MonoBehaviour {
                     }
                 }
 	            break;
+            case State.Wandering:
+                if (_faithtracker != null && _faithtracker.Converted)
+	            {
+	                _hasDestination = false;
+                    FollowerState = State.Returning;
+	            }
+                if (_faithtracker != null && _faithtracker.Faithless)
+                {
+                    _hasDestination = false;
+                    FollowerState = State.Leaving;
+                }
+	            if (_currentStateTime == 0.0f)
+	            {
+                    _animation.Play("Walk");
+                    if (!_hasDestination)
+                    {
+                        if (_exitPoints != null && _villageArea != null)
+                        {
+                            _destination = _villageArea.GetRandomPos();
+                            _navAgent.SetDestination(_destination);
+                            _hasDestination = true;
+                        }
+                    }
+	            }
+                if (!_navAgent.pathPending)
+                {
+                    if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
+                    {
+                        if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
+                        {
+                            if (_exitPoints != null && _villageArea != null)
+                            {
+                                _destination = _villageArea.GetRandomPos();
+                                _navAgent.SetDestination(_destination);
+                                if (Random.Range(0, 2) == 0)
+                                {
+                                    FollowerState = State.Dazed;
+                                }
+                            }
+                        }
+                    }
+                }
+	            break;
             case State.Dazed:
 	            if (_currentStateTime == 0.0f)
 	            {
@@ -228,6 +281,11 @@ public class Follower : MonoBehaviour {
                     FollowerState = _previousState;
 	            }
 	            break;
+            case State.Dropping:
+	            if (_currentStateTime == 0.0f)
+	            {
+	                _animation.CrossFade("Flail");
+	            }
             case State.Fleeing:
 	            if (_currentStateTime == 0.0f)
 	            {
@@ -252,6 +310,7 @@ public class Follower : MonoBehaviour {
 	            }
 	            break;
             case State.Returning:
+	            _navAgent.speed = _speed;
                 if (_faithtracker != null && _faithtracker.Faithless)
                 {
                     _hasDestination = false;
