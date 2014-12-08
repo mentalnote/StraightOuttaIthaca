@@ -217,7 +217,7 @@ public class Follower : MonoBehaviour {
 	                    FollowerState = _previousState;
 	                }
 	            }
-                if (!_navAgent.pathPending)
+                if (!_navAgent.pathPending && _hasDestination)
                 {
                     if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
                     {
@@ -226,8 +226,14 @@ public class Follower : MonoBehaviour {
                             _animation["PrayStart"].wrapMode = WrapMode.Once;
                             _animation.CrossFade("PrayStart");
                             _animation.PlayQueued("PrayRepeat");
+                            _hasDestination = false;
+                            _currentStateTime = 10.0f;
                         }
                     }
+                }
+	            if (!_hasDestination && _currentStateTime <= 11.0f)
+	            {
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_idol.transform.position - transform.position), (_currentStateTime - 10.0f) / 1.0f);
                 }
 	            break;
             case State.Dead:

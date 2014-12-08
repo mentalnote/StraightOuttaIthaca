@@ -5,6 +5,7 @@ public class LiftLogic : MonoBehaviour
     private SphereCollider sphereCollider;
     private Transform selectedFollower = null;
     private float liftHeight = 52;  //max height of terrain
+    private bool lifting = false;
 
     private void Start()
     {
@@ -26,34 +27,50 @@ public class LiftLogic : MonoBehaviour
             }
         }
 
-        Debug.Log("follower = " + selectedFollower);
+        if (selectedFollower != null)
+        {
+            selectedFollower.rigidbody.isKinematic = true;
+            lifting = true;
+
+            Debug.Log("follower = " + selectedFollower);
+        }
+
     }
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(lifting)
         {
-            Vector3 mousePt = camera.ScreenToWorldPoint(Input.mousePosition);
-
-            selectedFollower.position = new Vector3(mousePt.x, liftHeight, mousePt.z);
-        }
-
-        else if(Input.GetMouseButtonUp(0))
-        {
-            Vector3 mousePt = camera.ScreenToWorldPoint(Input.mousePosition);
-
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            //if (Physics.Raycast(ray, out hit))
+            //USE FOR CORRECT RAYCASTING
+            //var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //RaycastHit hit;
+            //if (Physics.Raycast(ray, out hit, 1 << LayerMask.NameToLayer("Terrain")))
             //{
+            //    if (hit.collider != null)
+            //    {
+            //        Vector3 worldPos = hit.point;
+            //        Vector3 newPos = new Vector3(worldPos.x, worldPos.y + 10, worldPos.y);
+            //        Debug.Log("newPos = " + newPos);
 
-            selectedFollower.position = new Vector3(mousePt.x, liftHeight, mousePt.z);
+            //        selectedFollower.position = newPos;
+            //    }
+            //}
+
+
+
+
+            //Vector3 mousePt = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //Debug.Log(mousePt);
+            //Debug.Log(Input.mousePosition);
+
+            //selectedFollower.position = new Vector3(mousePt.x, liftHeight, mousePt.z);
         }
 
-        //else if (Input.GetMouseButtonDown(0))
-        //{
-        //    LiftFollower();
-        //}
+        if (Input.GetMouseButtonUp(0))
+        {
+            selectedFollower.rigidbody.isKinematic = false;
+            lifting = false;
+        }
     }
 
     private void LiftFollower()
