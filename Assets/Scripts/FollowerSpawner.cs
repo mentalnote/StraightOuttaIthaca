@@ -3,39 +3,25 @@ using System.Collections;
 
 public class FollowerSpawner : MonoBehaviour
 {
+    [SerializeField] private float _spawnRadius = 10.0f;
 
     [SerializeField] private float _spawnPerMinute;
-    [SerializeField] private GameObject _prefab;
+    [SerializeField] private Follower _prefab;
 
-    private bool _stop;
-    private float _timeSinceLastSpawn = 0.0f;
+    public void Spawn()
+    {
+        Vector3 spawnPosition = transform.position;
+        
+        spawnPosition += new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f)).normalized * Random.Range(0.0f, _spawnRadius);
+        
+        Instantiate(_prefab, transform.position, transform.rotation);
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	    if (!_stop && _prefab != null)
-	    {
-            if (_timeSinceLastSpawn > (60.0f /_spawnPerMinute))
-	        {
-	            GameObject follower = (GameObject)Instantiate(_prefab, transform.position, transform.rotation);
-	            Follower followerScript = follower.GetComponent<Follower>();
-	            if (followerScript != null && Random.Range(0,2) == 0)
-	            {
-	                followerScript.FollowerState = Follower.State.Returning;
-	            }
-	            _timeSinceLastSpawn = 0;
-	        }
-	        _timeSinceLastSpawn += Time.deltaTime;
-	    }
-
-	    if (Input.GetKeyDown(KeyCode.Space))
-	    {
-	        _stop = !_stop;
-	    }
-
-	}
+    public void Spawn(int count)
+    {
+        for (int i = 0; i < count; ++i)
+        {
+            Spawn();
+        }
+    }
 }
