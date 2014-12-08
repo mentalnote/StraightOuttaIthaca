@@ -2,14 +2,12 @@
 using System.Collections;
 
 public class PokeLogic : MonoBehaviour
-{
-
+   {
     [SerializeField] 
     private float _pushForce = 1f;
 
     [SerializeField] 
     private float _radius = 1f;
-
 
     void OnDrawGizmos()
     {
@@ -28,7 +26,6 @@ public class PokeLogic : MonoBehaviour
 	        if (fScript != null)
 	        {
 	            fScript.BlowAwayFrom(transform.position, _pushForce, _radius);
-                fScript.FollowerState = Follower.State.GettingBlown;
 	        }
 	    }
         Destroy(gameObject);

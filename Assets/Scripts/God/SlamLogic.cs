@@ -17,9 +17,6 @@ sealed public class SlamLogic : MonoBehaviour
 			if (follower != null && follower.rigidbody != null)
 			{
 				follower.BlowAwayFrom(transform.position, force, radius);
-
-                /*follower.FollowerState = Follower.State.GettingBlown;
-                follower.rigidbody.AddForce(((follower.transform.position - transform.position).normalized + new Vector3(0.0f, 0.5f, 0.0f)) * force);*/
 			}
 		}
 	}

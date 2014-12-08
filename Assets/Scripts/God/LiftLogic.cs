@@ -31,8 +31,6 @@ public class LiftLogic : MonoBehaviour
         {
             selectedFollower.rigidbody.isKinematic = true;
             lifting = true;
-
-            Debug.Log("follower = " + selectedFollower);
         }
 
     }
@@ -41,22 +39,27 @@ public class LiftLogic : MonoBehaviour
     {
         if(lifting)
         {
-            //USE FOR CORRECT RAYCASTING
-            //var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //RaycastHit hit;
-            //if (Physics.Raycast(ray, out hit, 1 << LayerMask.NameToLayer("Terrain")))
-            //{
-            //    if (hit.collider != null)
-            //    {
-            //        Vector3 worldPos = hit.point;
-            //        Vector3 newPos = new Vector3(worldPos.x, worldPos.y + 10, worldPos.y);
-            //        Debug.Log("newPos = " + newPos);
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 1 << LayerMask.NameToLayer("Terrain")))
+            {
+                if (hit.collider != null)
+                {
+                    Vector3 worldPos = hit.point;
+                    Vector3 newPos = new Vector3(worldPos.x, worldPos.y + 10.0f, worldPos.z);
 
-            //        selectedFollower.position = newPos;
-            //    }
-            //}
+                    selectedFollower.position = newPos;
 
-
+                    if (Input.GetMouseButtonUp(0))
+                    {
+                        selectedFollower.transform.position = worldPos;
+                        Destroy(selectedFollower.gameObject.GetComponent<NavMeshAgent>());
+                        selectedFollower.gameObject.GetComponent<Follower>().Die();
+                        selectedFollower.rigidbody.isKinematic = false;
+                        lifting = false;
+                    }
+                }
+            }
 
 
             //Vector3 mousePt = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -64,12 +67,6 @@ public class LiftLogic : MonoBehaviour
             //Debug.Log(Input.mousePosition);
 
             //selectedFollower.position = new Vector3(mousePt.x, liftHeight, mousePt.z);
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            selectedFollower.rigidbody.isKinematic = false;
-            lifting = false;
         }
     }
 

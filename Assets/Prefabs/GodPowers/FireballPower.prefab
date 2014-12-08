@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 50
-  force: 1
+  force: 1500
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 0

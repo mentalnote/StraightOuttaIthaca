@@ -12,27 +12,25 @@ sealed public class PoisonLogic : MonoBehaviour
 
     private void Start()
     {
-        damageScript = GetComponent<DamageScript>();
-
-        if (damageScript != null)
-        {
-            particleSystem.Play();
-        }
+        particleSystem.Play();
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
         for (int i = 0; i < colliders.Length; ++i)
         {
             Follower follower = colliders[i].gameObject.GetComponent<Follower>();
-            if (follower != null && follower.gameObject.GetComponent<PoisonLogic>() == null)
+            if (follower != null && follower.gameObject.GetComponentsInChildren<PoisonLogic>().Length == 0)
             {
-                follower.gameObject.AddComponent<PoisonLogic>();
+                PoisonLogic poisonLogic = (PoisonLogic)Instantiate(this, follower.transform.position, Quaternion.identity);
+
+                poisonLogic.transform.parent = follower.transform;
+                poisonLogic.damageScript = follower.gameObject.GetComponent<DamageScript>();
             }
         }
     }
 
     private void Update()
     {
-        if (damageScript != null || (damageScript = GetComponent<DamageScript>()) != null)
+        if (damageScript != null)
         {
             damageScript.applyDamage(DamageScript.DamageType.POISON, damagePerSecond * Time.deltaTime);
         }
