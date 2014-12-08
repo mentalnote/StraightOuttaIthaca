@@ -23,12 +23,24 @@ public class Follower : MonoBehaviour {
         {
             if (_state != value)
             {
+                if (_state == State.GettingBlown)
+                {
+                    rigidbody.velocity = Vector3.zero;
+                    _navAgent.Resume();
+                }
+
                 _previousState = _state;
                 _state = value;
                 _currentStateTime = 0.0f;
+
+                if (_state == State.GettingBlown)
+                {
+                    _navAgent.Stop(true);
+                }
             }
         }
     }
+
 
     [SerializeField]
     private State _state;
@@ -49,6 +61,9 @@ public class Follower : MonoBehaviour {
     private DamageScript _damageScript;
 
     [SerializeField] 
+    private FaithTracker _faithtracker;
+
+    [SerializeField] 
     private Animation _animation;
 
     private float _currentStateTime;
@@ -61,6 +76,21 @@ public class Follower : MonoBehaviour {
     private GameObject sourceOfFear;
     private Idol _idol;
 
+    public void BlowAwayFrom(Vector3 position, float force, float radius)
+    {
+        if (FollowerState != State.GettingBlown)
+        {
+            Vector3 displacement = transform.position - position;
+            float displacementMagnitude = displacement.magnitude;
+
+            Vector3 displacementNormalized = new Vector3(displacement.x, 0.0f, displacement.z).normalized;
+            displacementNormalized.y = 1.0f;
+
+            rigidbody.AddForce(displacementNormalized * (force * (1.0f - Mathf.Clamp01(displacementMagnitude / radius))));
+
+            FollowerState = State.GettingBlown;
+        }
+    }
 
     public void SetIdol(Idol idolScript)
     {
@@ -117,7 +147,7 @@ public class Follower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    switch (FollowerState)
+        switch (FollowerState)
 	    {
 	        case State.Leaving:
 	            if (_currentStateTime == 0.0f)
@@ -198,8 +228,14 @@ public class Follower : MonoBehaviour {
             case State.GettingBlown:
 	            if (_currentStateTime == 0.0f)
 	            {
-	                //animation
-	            }
+                    animation.wrapMode = WrapMode.Loop;
+    	            animation.CrossFade("Flail");
+                }
+            
+                if (_currentStateTime > 5.0f && rigidbody.velocity.magnitude < 1.0f)
+                {
+                    FollowerState = _previousState;
+                }
 	            break;
             case State.Praying:
                 if (_currentStateTime == 0.0f)
@@ -217,7 +253,7 @@ public class Follower : MonoBehaviour {
 	                    FollowerState = _previousState;
 	                }
 	            }
-                if (!_navAgent.pathPending)
+                if (!_navAgent.pathPending && _hasDestination)
                 {
                     if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
                     {
@@ -226,18 +262,25 @@ public class Follower : MonoBehaviour {
                             _animation["PrayStart"].wrapMode = WrapMode.Once;
                             _animation.CrossFade("PrayStart");
                             _animation.PlayQueued("PrayRepeat");
+                            _hasDestination = false;
+                            _currentStateTime = 10.0f;
                         }
                     }
+                }
+	            if (!_hasDestination && _currentStateTime <= 11.0f)
+	            {
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_idol.transform.position - transform.position), (_currentStateTime - 10.0f) / 1.0f);
                 }
 	            break;
             case State.Dead:
                 if (_currentStateTime == 0.0f)
                 {
                     _animation.CrossFade("Death");
+                    animation.wrapMode = WrapMode.Once;
                     _audioSource.clip = null;
                     //_audioSource.Play();
                 }
-                if (_currentStateTime > 8.0f)
+                if (_currentStateTime > 4.0f)
                 {
                     if (_transparentMat != null)
                     {
@@ -248,7 +291,7 @@ public class Follower : MonoBehaviour {
                     colour.a -= 0.5f * Time.deltaTime;
                     _meshRenderer.renderer.material.color = colour;
                 }
-                if (_currentStateTime > 10.0f)
+                if (_currentStateTime > 5.0f)
                 {
                     Destroy(gameObject);
                 }

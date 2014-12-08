@@ -1,15 +1,26 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class SlamLogic : MonoBehaviour {
+sealed public class SlamLogic : MonoBehaviour
+{
+	[SerializeField]
+    private float radius = .0f;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+    [SerializeField]
+	private float force = 1.0f;
+
+	private void Start()
+	{
+		Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
+		for (int i = 0; i < colliders.Length; ++i)
+		{
+			Follower follower = colliders[i].gameObject.GetComponent<Follower>();
+			if (follower != null && follower.rigidbody != null)
+			{
+				follower.BlowAwayFrom(transform.position, force, radius);
+
+                /*follower.FollowerState = Follower.State.GettingBlown;
+                follower.rigidbody.AddForce(((follower.transform.position - transform.position).normalized + new Vector3(0.0f, 0.5f, 0.0f)) * force);*/
+			}
+		}
 	}
 }

@@ -31,18 +31,10 @@ public class Idol : MonoBehaviour
         int row = _currentWorshippers == 0 ? 0 : _currentWorshippers / _columns;
         int column = _currentWorshippers == 0 ? 0 : _currentWorshippers % _columns;
         _currentWorshippers++;
-        int spacingCoefficient = column/2;
-        print("row: " + row);
-        print("column: " + column);
-        print("spacing coefficient: " + spacingCoefficient);
-        Vector3 temp = _currentWorshippers%2 == 0
-            ? _offsetPosition + new Vector3(row*_spacing, 0, spacingCoefficient*_spacing + _breadthOffset)
-            : _offsetPosition + new Vector3(row*_spacing, 0, -spacingCoefficient*_spacing + _breadthOffset);
-        print("end result: " + temp);
-        print("----------------------------------");
+        int spacingCoefficient = (column+1)/2;
         return _currentWorshippers%2 == 0
-            ? _offsetPosition + new Vector3(row*_spacing, 0, spacingCoefficient*_spacing + _breadthOffset)
-            : _offsetPosition + new Vector3(row * _spacing, 0, -spacingCoefficient * _spacing + _breadthOffset);
+            ? _offsetPosition + new Vector3(spacingCoefficient * _spacing + _breadthOffset, 0, row * _spacing)
+            : _offsetPosition + new Vector3(-spacingCoefficient * _spacing + _breadthOffset, 0, row * _spacing);
 
     }
 }

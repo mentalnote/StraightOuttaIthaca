@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class DamageScript : MonoBehaviour {
 
     public enum DamageType {
-        PHYSICAL, FIRE
+        PHYSICAL, FIRE, POISON
     }
 
     public delegate void DamageCallback(float damage, float health);
