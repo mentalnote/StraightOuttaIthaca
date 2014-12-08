@@ -25,24 +25,20 @@ public class Follower : MonoBehaviour {
         {
             if (_state != value)
             {
-                if (_state == State.GettingBlown)
-                {
-                    rigidbody.velocity = Vector3.zero;
-                    _navAgent.Resume();
-                }
-
                 _previousState = _state;
                 _state = value;
                 _currentStateTime = 0.0f;
-
-                if (_state == State.GettingBlown)
-                {
-                    _navAgent.Stop(true);
-                }
             }
         }
     }
 
+    public FaithTracker FaithTracker
+    {
+        get
+        {
+            return _faithtracker;
+        }
+    }
 
     [SerializeField]
     private State _state;
@@ -88,6 +84,11 @@ public class Follower : MonoBehaviour {
     private Idol _idol;
     private SceneArea _villageArea;
 
+    public void Die()
+    {
+        FollowerState = State.Dead;
+    }
+
     public void BlowAwayFrom(Vector3 position, float force, float radius)
     {
         if (FollowerState != State.GettingBlown)
@@ -95,14 +96,14 @@ public class Follower : MonoBehaviour {
             Vector3 displacement = transform.position - position;
             float displacementMagnitude = displacement.magnitude;
 
-            /*Vector3 displacementNormalized = new Vector3(displacement.x + Random.Range(-0.5f, 0.5f), 0.0f, displacement.z + Random.Range(-0.5f, 0.5f)).normalized;
-            displacementNormalized.y = 1.0f;*/
-
-            Vector3 displacementNormalized = new Vector3(0.0f, 1.0f, 0.0f);
+            Vector3 displacementNormalized = new Vector3(displacement.x + Random.Range(-0.5f, 0.5f), 0.0f, displacement.z + Random.Range(-0.5f, 0.5f)).normalized;
+            displacementNormalized.y = 10.0f;
 
             rigidbody.AddForce(displacementNormalized * (force * (1.0f - Mathf.Clamp01(displacementMagnitude / radius))));
 
-            FollowerState = State.GettingBlown;
+            Destroy(_navAgent);
+
+            FollowerState = State.Dead;
         }
     }
 
@@ -198,74 +199,80 @@ public class Follower : MonoBehaviour {
         switch (FollowerState)
 	    {
 	        case State.Leaving:
-                _navAgent.speed = _speed;
-	            if (_faithtracker != null && _faithtracker.Converted)
-	            {
-	                _hasDestination = false;
-                    FollowerState = State.Returning;
-	            }
-	            if (_currentStateTime == 0.0f)
-	            {
-                    _animation.Play("Walk");
-                    if (!_hasDestination)
-                    {
-                        if (_exitPoints != null)
-                        {
-                            _destination = _exitPoints[Random.Range(0, _exitPoints.Length)];
-                            _navAgent.SetDestination(_destination);
-                            _hasDestination = true;
-                        }
-                    }
-	            }
-                if (!_navAgent.pathPending)
+                if (_navAgent != null)
                 {
-                    if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
-                    {
-                        if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
+                    _navAgent.speed = _speed;
+    	            if (_faithtracker != null && _faithtracker.Converted)
+    	            {
+    	                _hasDestination = false;
+                        FollowerState = State.Returning;
+    	            }
+    	            if (_currentStateTime == 0.0f)
+    	            {
+                        _animation.Play("Walk");
+                        if (!_hasDestination)
                         {
-                            Destroy(gameObject);
-                            //FollowerState = State.Dead;
+                            if (_exitPoints != null)
+                            {
+                                _destination = _exitPoints[Random.Range(0, _exitPoints.Length)];
+                                _navAgent.SetDestination(_destination);
+                                _hasDestination = true;
+                            }
+                        }
+    	            }
+                    if (!_navAgent.pathPending)
+                    {
+                        if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
+                        {
+                            if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
+                            {
+                                Destroy(gameObject);
+                                //FollowerState = State.Dead;
+                            }
                         }
                     }
                 }
 	            break;
             case State.Wandering:
-                if (_faithtracker != null && _faithtracker.Converted)
-	            {
-	                _hasDestination = false;
-                    FollowerState = State.Returning;
-	            }
-                if (_faithtracker != null && _faithtracker.Faithless)
+                if (_navAgent != null)
                 {
-                    _hasDestination = false;
-                    FollowerState = State.Leaving;
-                }
-	            if (_currentStateTime == 0.0f)
-	            {
-                    _animation.Play("Walk");
-                    if (!_hasDestination)
+                    if (_faithtracker != null && _faithtracker.Converted)
+    	            {
+    	                _hasDestination = false;
+                        FollowerState = State.Returning;
+    	            }
+                    if (_faithtracker != null && _faithtracker.Faithless)
                     {
-                        if (_exitPoints != null && _villageArea != null)
-                        {
-                            _destination = _villageArea.GetRandomPos();
-                            _navAgent.SetDestination(_destination);
-                            _hasDestination = true;
-                        }
+                        _hasDestination = false;
+                        FollowerState = State.Leaving;
                     }
-	            }
-                if (!_navAgent.pathPending)
-                {
-                    if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
-                    {
-                        if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
+    	            if (_currentStateTime == 0.0f)
+    	            {
+                        _animation.Play("Walk");
+                        if (!_hasDestination)
                         {
                             if (_exitPoints != null && _villageArea != null)
                             {
                                 _destination = _villageArea.GetRandomPos();
                                 _navAgent.SetDestination(_destination);
-                                if (Random.Range(0, 2) == 0)
+                                _hasDestination = true;
+                            }
+                        }
+    	            }
+                    if (!_navAgent.pathPending)
+                    {
+                        if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
+                        {
+                            if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
+                            {
+                                if (_exitPoints != null && _villageArea != null)
                                 {
-                                    FollowerState = State.Dazed;
+                                    _destination = _villageArea.GetRandomPos();
+                                    _navAgent.SetDestination(_destination);
+                                    if (Random.Range(0, 2) == 0)
+                                    {
+                                        FollowerState = State.Dazed;
+                                    }
                                 }
                             }
                         }
@@ -273,15 +280,18 @@ public class Follower : MonoBehaviour {
                 }
 	            break;
             case State.Dazed:
-	            if (_currentStateTime == 0.0f)
-	            {
-	                _navAgent.speed = 0.0f;
-	            }
-	            if (_currentStateTime >= 4.0f)
-	            {
-	                _navAgent.speed = _speed;
-                    FollowerState = _previousState;
-	            }
+	            if (_navAgent != null)
+                {
+                    if (_currentStateTime == 0.0f)
+    	            {
+    	                _navAgent.speed = 0.0f;
+    	            }
+    	            if (_currentStateTime >= 4.0f)
+    	            {
+    	                _navAgent.speed = _speed;
+                        FollowerState = _previousState;
+    	            }
+                }
 	            break;
             case State.Dropping:
 	            if (_currentStateTime == 0.0f)
@@ -290,48 +300,54 @@ public class Follower : MonoBehaviour {
 	            }
                 break;
             case State.Fleeing:
-	            if (_currentStateTime == 0.0f)
-	            {
-                    _animation.CrossFade("Run");
-	                if (sourceOfFear != null)
-	                {
-	                    Vector3 runDirection = sourceOfFear.transform.position - transform.position;
-	                    _navAgent.SetDestination(transform.position + (runDirection.normalized * 50));
-	                    _navAgent.speed = _speed*1.5f;
-	                    _hasDestination = true;
-	                }
-	                else
-	                {
+                if (_navAgent != null)
+                {
+    	            if (_currentStateTime == 0.0f)
+    	            {
+                        _animation.CrossFade("Run");
+    	                if (sourceOfFear != null)
+    	                {
+    	                    Vector3 runDirection = sourceOfFear.transform.position - transform.position;
+    	                    _navAgent.SetDestination(transform.position + (runDirection.normalized * 50));
+    	                    _navAgent.speed = _speed*1.5f;
+    	                    _hasDestination = true;
+    	                }
+    	                else
+    	                {
+                            FollowerState = _previousState;
+    	                }    
+    	            }
+    	            if (_currentStateTime >= 4.0f)
+    	            {
+                        _hasDestination = false;
+                        _navAgent.speed = _speed;
                         FollowerState = _previousState;
-	                }    
-	            }
-	            if (_currentStateTime >= 4.0f)
-	            {
-                    _hasDestination = false;
-                    _navAgent.speed = _speed;
-                    FollowerState = _previousState;
-	            }
+                    }
+                }
 	            break;
             case State.Returning:
-	            _navAgent.speed = _speed;
-                if (_faithtracker != null && _faithtracker.Faithless)
+                if (_navAgent != null)
                 {
-                    _hasDestination = false;
-                    FollowerState = State.Leaving;
-                }
-                if (_currentStateTime == 0.0f)
-	            {
-                    _animation.CrossFade("Walk");
-                    if (!_hasDestination)
+    	            _navAgent.speed = _speed;
+                    if (_faithtracker != null && _faithtracker.Faithless)
                     {
-                        if (_prayPoints != null)
-                        {
-                            _destination = _prayPoints[Random.Range(0, _prayPoints.Length)];
-                            _navAgent.SetDestination(_destination);
-                            _hasDestination = true;
-                        }
+                        _hasDestination = false;
+                        FollowerState = State.Leaving;
                     }
-	            }
+                    if (_currentStateTime == 0.0f)
+    	            {
+                        _animation.CrossFade("Walk");
+                        if (!_hasDestination)
+                        {
+                            if (_prayPoints != null)
+                            {
+                                _destination = _prayPoints[Random.Range(0, _prayPoints.Length)];
+                                _navAgent.SetDestination(_destination);
+                                _hasDestination = true;
+                            }
+                        }
+    	            }
+                }
                 break;
             case State.GettingBlown:
 	            if (_currentStateTime == 0.0f)
@@ -346,44 +362,47 @@ public class Follower : MonoBehaviour {
                 }
 	            break;
             case State.Praying:
-                if (_currentStateTime == 0.0f)
+                if (_navAgent != null)
                 {
-                    _animation.CrossFade("Walk");
-	                if (_idol != null)
-	                {
-	                    _hasDestination = true;
-	                    _destination = _idol.ClaimPositionOfPraise();
-	                    collider.enabled = false;
-	                    _navAgent.SetDestination(_destination);
-	                }
-	                else
-	                {
-	                    FollowerState = _previousState;
-	                }
-	            }
-                if (!_navAgent.pathPending && _hasDestination)
-                {
-                    if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
+                    if (_currentStateTime == 0.0f)
                     {
-                        if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
+                        _animation.CrossFade("Walk");
+    	                if (_idol != null)
+    	                {
+    	                    _hasDestination = true;
+    	                    _destination = _idol.ClaimPositionOfPraise();
+    	                    collider.enabled = false;
+    	                    _navAgent.SetDestination(_destination);
+    	                }
+    	                else
+    	                {
+    	                    FollowerState = _previousState;
+    	                }
+    	            }
+                    if (!_navAgent.pathPending && _hasDestination)
+                    {
+                        if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
                         {
-                            _animation["PrayStart"].wrapMode = WrapMode.Once;
-                            _animation.CrossFade("PrayStart");
-                            _animation.PlayQueued("PrayRepeat");
-                            _hasDestination = false;
-                            _currentStateTime = 10.0f;
+                            if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
+                            {
+                                _animation["PrayStart"].wrapMode = WrapMode.Once;
+                                _animation.CrossFade("PrayStart");
+                                _animation.PlayQueued("PrayRepeat");
+                                _hasDestination = false;
+                                _currentStateTime = 10.0f;
+                            }
                         }
                     }
-                }
-	            if (!_hasDestination && _currentStateTime <= 11.0f)
-	            {
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_idol.transform.position - transform.position), (_currentStateTime - 10.0f) / 1.0f);
+    	            if (!_hasDestination && _currentStateTime <= 11.0f)
+    	            {
+                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_idol.transform.position - transform.position), (_currentStateTime - 10.0f) / 1.0f);
+                    }
                 }
 	            break;
             case State.Dead:
                 if (_currentStateTime == 0.0f)
                 {
-                    _animation.CrossFade("Death");
+                    _animation.CrossFade("Flail");
                     animation.wrapMode = WrapMode.Once;
                     _audioSource.clip = null;
                     //_audioSource.Play();

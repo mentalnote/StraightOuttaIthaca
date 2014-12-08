@@ -1,23 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MeteorLogic : MonoBehaviour {
+public class MeteorLogic : MonoBehaviour
+{
+    [SerializeField]
+    private float height = 20.0f;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    [SerializeField]
+    private float radius = 5.0f;
+    
+    [SerializeField]
+    private float force = 1.0f;
 
-    void OnParticlesCollision(GameObject collision)
+    private void Start()
     {
-        //meteors actually have collision on their particles
-        //might work...easier?
-        print("luck (prefab_testing)");
+        transform.position += new Vector3(0.0f, height, 0.0f);
+    }
+
+    void OnParticleCollision(GameObject collision)
+    {
+        Follower follower = collision.gameObject.GetComponent<Follower>();
+        if (follower != null)
+        {
+            follower.BlowAwayFrom(transform.position, force, radius);
+        }
     }
 
 }

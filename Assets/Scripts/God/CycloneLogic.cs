@@ -4,14 +4,16 @@ using System.Collections;
 public class CycloneLogic : MonoBehaviour
 {
     [SerializeField]
+    private float radius = 5.0f;
+
+    [SerializeField]
     private float force = 1;
-    
-    private SphereCollider sphereCollider;
+
+    [SerializeField]
+    private float turnSpeed = 180.0f;
 
     private void Start()
     {
-        sphereCollider = collider as SphereCollider;
-
         StartCoroutine("EffectFollowers");
     }
 
@@ -19,26 +21,22 @@ public class CycloneLogic : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, sphereCollider.radius);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
 
         for (int i = 0; i < hitColliders.Length; ++i)
         {
-            if (hitColliders[i].name.StartsWith("Follower"))
+            Follower follower = hitColliders[i].gameObject.GetComponent<Follower>();
+            if (follower != null)
             {
-                GameObject followerObject = hitColliders[i].gameObject;
-                Follower follower = hitColliders[i].GetComponent<Follower>();
-                follower.FollowerState = Follower.State.GettingBlown;
-                BlowFollowerAway(followerObject.transform);
+                follower.BlowAwayFrom(follower.transform.position - new Vector3(0.0f, -1.0f, 0.0f), force, radius);
+
+                follower.transform.parent = transform;
             }
         }
     }
 
-    private void BlowFollowerAway(Transform follower)
+    private void Update()
     {
-        Vector3 direction = new Vector3(follower.position.x - sphereCollider.transform.position.x, 0f, follower.position.z - sphereCollider.transform.position.z);
-
-        direction.Normalize();
-
-        follower.rigidbody.AddForce(direction * force);
+        transform.rotation = Quaternion.Euler(0.0f, Time.timeSinceLevelLoad * turnSpeed, 0.0f);
     }
 }

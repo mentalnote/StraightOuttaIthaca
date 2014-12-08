@@ -11,7 +11,6 @@ GameObject:
   - 198: {fileID: 19800000}
   - 199: {fileID: 19900000}
   - 114: {fileID: 11400002}
-  - 135: {fileID: 13500000}
   - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: ConvertPower
@@ -103,6 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e337b1f2010d2248a4d741539028b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  radius: 5
+  faith: 50
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -116,18 +117,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _totalCharges: 3
   _godGloryCost: 10
---- !u!135 &13500000
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 11.1788874
-  m_Center: {x: -.00365066528, y: .134817153, z: 7.97098827}
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1

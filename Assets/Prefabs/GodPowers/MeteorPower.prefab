@@ -192,6 +192,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e313efcca4a01d4cb019de3f2fdf7af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  height: 200
+  radius: 50
+  force: 1000
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -382,7 +385,7 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 1
     startSize:
-      scalar: 1.5
+      scalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -397,7 +400,7 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: .333333343
+          value: .600000024
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -447,9 +450,9 @@ ParticleSystem:
     radius: 1
     angle: 10
     length: 5
-    boxX: 10
-    boxY: .00999999978
-    boxZ: 10
+    boxX: 40
+    boxY: 40
+    boxZ: .00999999978
     placementMode: 0
     m_Mesh: {fileID: 0}
     randomDirection: 0
@@ -457,7 +460,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 5
+      scalar: 15
       maxCurve:
         serializedVersion: 2
         m_Curve:

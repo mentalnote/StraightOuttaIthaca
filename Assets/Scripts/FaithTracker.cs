@@ -17,7 +17,15 @@ public class FaithTracker : MonoBehaviour
     public float Faith
     {
         get { return _faith; }
-        set { _faith = value; }
+        set
+        { 
+            _faith = value;
+
+            if (_faith > 100.0f)
+            {
+                _faith = 100.0f;
+            }
+        }
     }
 
     [SerializeField] 
