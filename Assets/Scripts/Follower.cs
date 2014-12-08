@@ -27,6 +27,12 @@ public class Follower : MonoBehaviour {
             {
                 _previousState = _state;
                 _state = value;
+
+                if (_state == State.Dead)
+                {
+                    AudioSource.PlayClipAtPoint(deathSoundEffect, transform.position);
+                }
+
                 _currentStateTime = 0.0f;
             }
         }
@@ -72,6 +78,12 @@ public class Follower : MonoBehaviour {
 
     [SerializeField] 
     private Animation _animation;
+
+    [SerializeField]
+    private AudioClip praySoundEffect = null;
+
+    [SerializeField]
+    private AudioClip deathSoundEffect = null;
 
     private float _currentStateTime;
     private Vector3[] _exitPoints;
@@ -390,6 +402,8 @@ public class Follower : MonoBehaviour {
                                 _animation.PlayQueued("PrayRepeat");
                                 _hasDestination = false;
                                 _currentStateTime = 10.0f;
+
+                                AudioSource.PlayClipAtPoint(praySoundEffect, transform.position);
                             }
                         }
                     }
