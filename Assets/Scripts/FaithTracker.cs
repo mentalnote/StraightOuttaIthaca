@@ -6,7 +6,7 @@ public class FaithTracker : MonoBehaviour
 
     public bool Converted
     {
-        get { return _converted;  }    
+        get { return _faithfulThreshold <= _faith; }    
     }
 
     public bool Faithless
@@ -32,9 +32,11 @@ public class FaithTracker : MonoBehaviour
     [SerializeField] 
     private float _escapeThreshold = 50.0f;
 
+    [SerializeField] 
+    private float _faithfulThreshold = 80.0f;
+
     private float _faith;
     private float _timePassed;
-    private bool _converted;
 
 
     public void InstillFaith(float amount)
@@ -51,12 +53,8 @@ public class FaithTracker : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-	    if (_faith >= 100.0f)
-	    {
-	        _converted = true;
-	    }
 	    _timePassed += Time.deltaTime;
-	    if (_timePassed >= 1.0f && !_converted)
+	    if (_timePassed >= 1.0f)
 	    {
 	        _timePassed = _timePassed%1.0f;
 	        _faith -= Random.Range(_minLossPerSecond, _maxLossPerSecond);
