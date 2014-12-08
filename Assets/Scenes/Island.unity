@@ -3280,7 +3280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 21300000, guid: ce4036e29d93ab849a964b17b60162fb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15f2ae6b162b87c45baa7da3a0f8fa88, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10993,6 +10993,11 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2109279030}
+    - target: {fileID: 11400278, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 15f2ae6b162b87c45baa7da3a0f8fa88,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
   m_RootGameObject: {fileID: 485781614}
