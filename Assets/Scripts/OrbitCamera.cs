@@ -6,6 +6,9 @@ sealed public class OrbitCamera : MonoBehaviour
     private Transform pivotTransform = null;
 
     [SerializeField]
+    private Vector3 pivotOffset = Vector3.zero;
+
+    [SerializeField]
     private float viewDistance = 100.0f;
 
     [SerializeField]
@@ -26,5 +29,6 @@ sealed public class OrbitCamera : MonoBehaviour
         }
 
         transform.position -= transform.forward * viewDistance;
+        transform.position += transform.rotation * pivotOffset;
     }
 }
