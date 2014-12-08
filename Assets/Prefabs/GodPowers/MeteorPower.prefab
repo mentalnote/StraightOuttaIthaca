@@ -195,6 +195,7 @@ MonoBehaviour:
   height: 200
   radius: 50
   force: 1000
+  soundEffect: {fileID: 8300000, guid: 6c79dec5345fa304e8347cde058b06f8, type: 3}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

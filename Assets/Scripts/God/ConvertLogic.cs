@@ -8,6 +8,9 @@ public class ConvertLogic : MonoBehaviour
     
     [SerializeField]
     private float faith = 10.0f;
+
+    [SerializeField]
+    private AudioClip soundEffect = null;
     
     private void Start()
     {
@@ -20,5 +23,7 @@ public class ConvertLogic : MonoBehaviour
                 follower.FaithTracker.Faith += faith;
             }
         }
+        
+        AudioSource.PlayClipAtPoint(soundEffect, transform.position);
     }
 }

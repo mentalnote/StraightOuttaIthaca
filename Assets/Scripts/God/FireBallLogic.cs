@@ -8,6 +8,9 @@ public class FireBallLogic : MonoBehaviour
     
     [SerializeField]
     private float force = 1.0f;
+
+    [SerializeField]
+    private AudioClip soundEffect = null;
     
     private void Start()
     {
@@ -23,5 +26,7 @@ public class FireBallLogic : MonoBehaviour
                 follower.rigidbody.AddForce(((follower.transform.position - transform.position).normalized + new Vector3(0.0f, 0.5f, 0.0f)) * force);*/
             }
         }
+
+        AudioSource.PlayClipAtPoint(soundEffect, transform.position);
     }
 }

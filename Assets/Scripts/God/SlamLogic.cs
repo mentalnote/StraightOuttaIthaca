@@ -8,6 +8,9 @@ sealed public class SlamLogic : MonoBehaviour
     [SerializeField]
 	private float force = 1.0f;
 
+    [SerializeField]
+    private AudioClip soundEffect = null;
+
 	private void Start()
 	{
 		Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
@@ -18,6 +21,8 @@ sealed public class SlamLogic : MonoBehaviour
 			{
 				follower.BlowAwayFrom(transform.position, force, radius);
 			}
-		}
+        }
+        
+        AudioSource.PlayClipAtPoint(soundEffect, transform.position);
 	}
 }

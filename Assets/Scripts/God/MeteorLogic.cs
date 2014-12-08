@@ -12,9 +12,14 @@ public class MeteorLogic : MonoBehaviour
     [SerializeField]
     private float force = 1.0f;
 
+    [SerializeField]
+    private AudioClip soundEffect = null;
+
     private void Start()
     {
         transform.position += new Vector3(0.0f, height, 0.0f);
+        
+        AudioSource.PlayClipAtPoint(soundEffect, transform.position);
     }
 
     void OnParticleCollision(GameObject collision)

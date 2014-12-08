@@ -12,9 +12,14 @@ public class CycloneLogic : MonoBehaviour
     [SerializeField]
     private float turnSpeed = 180.0f;
 
+    [SerializeField]
+    private AudioClip soundEffect = null;
+
     private void Start()
     {
         StartCoroutine("EffectFollowers");
+        
+        AudioSource.PlayClipAtPoint(soundEffect, transform.position);
     }
 
     private IEnumerator EffectFollowers()

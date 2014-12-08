@@ -2,6 +2,9 @@
 
 public class LiftLogic : MonoBehaviour 
 {
+    [SerializeField]
+    private AudioClip soundEffect;
+
     private SphereCollider sphereCollider;
     private Transform selectedFollower = null;
     private float liftHeight = 52;  //max height of terrain
@@ -33,6 +36,9 @@ public class LiftLogic : MonoBehaviour
             lifting = true;
         }
 
+        
+        
+        AudioSource.PlayClipAtPoint(soundEffect, transform.position);
     }
 
     private void Update()

@@ -238,6 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 50
   force: 1500
+  soundEffect: {fileID: 8300000, guid: c74cd2823cb17cc46a20c2af82058f28, type: 3}
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 0

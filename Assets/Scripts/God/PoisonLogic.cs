@@ -8,6 +8,9 @@ sealed public class PoisonLogic : MonoBehaviour
     [SerializeField]
     private float damagePerSecond = 1.0f;
 
+    [SerializeField]
+    private AudioClip soundEffect = null;
+
     private DamageScript damageScript = null;
 
     private void Start()
@@ -26,6 +29,8 @@ sealed public class PoisonLogic : MonoBehaviour
                 poisonLogic.damageScript = follower.gameObject.GetComponent<DamageScript>();
             }
         }
+        
+        AudioSource.PlayClipAtPoint(soundEffect, transform.position);
     }
 
     private void Update()

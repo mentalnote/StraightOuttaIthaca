@@ -43,6 +43,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pushForce: 100
   _radius: 1
+  soundEffect: {fileID: 8300000, guid: 29a7b3bade21a3d4c8f98c25dd1d056a, type: 3}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

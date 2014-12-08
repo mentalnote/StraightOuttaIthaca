@@ -7,6 +7,9 @@ public class MudSlideLogic : MonoBehaviour
     [SerializeField]
     private float radius = 5.0f;
 
+    [SerializeField]
+    private AudioClip soundEffect = null;
+
     private readonly List<Follower> followers = new List<Follower>();
 
     private void Start()
@@ -25,6 +28,8 @@ public class MudSlideLogic : MonoBehaviour
                 followers.Add(follower);
             }
         }
+        
+        AudioSource.PlayClipAtPoint(soundEffect, transform.position);
 
         StartCoroutine("EffectFollowers");
     }

@@ -195,6 +195,7 @@ MonoBehaviour:
   radius: 50
   force: 1000
   turnSpeed: 180
+  soundEffect: {fileID: 8300000, guid: 5cdc8d876d348244ea9ede9bcba505ae, type: 3}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

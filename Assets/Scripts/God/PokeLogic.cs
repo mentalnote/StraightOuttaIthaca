@@ -2,12 +2,15 @@
 using System.Collections;
 
 public class PokeLogic : MonoBehaviour
-   {
+{
     [SerializeField] 
     private float _pushForce = 1f;
 
     [SerializeField] 
     private float _radius = 1f;
+
+    [SerializeField]
+    private AudioClip soundEffect = null;
 
     void OnDrawGizmos()
     {
@@ -27,7 +30,10 @@ public class PokeLogic : MonoBehaviour
 	        {
 	            fScript.BlowAwayFrom(transform.position, _pushForce, _radius);
 	        }
-	    }
+        }
+        
+        AudioSource.PlayClipAtPoint(soundEffect, transform.position);
+
         Destroy(gameObject);
 	}
 	

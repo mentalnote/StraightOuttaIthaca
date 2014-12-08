@@ -104,6 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 5
   faith: 50
+  soundEffect: {fileID: 8300000, guid: c22375a2cdeeecc468314062352f97e9, type: 3}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
