@@ -45,6 +45,15 @@ public class Follower : MonoBehaviour {
     [SerializeField]
     private State _state;
 
+    [SerializeField] 
+    private float _faithRenewalRadius = 5.0f;
+
+    [SerializeField] 
+    private Color _faithfulColor = Color.blue;
+
+    [SerializeField] 
+    private Color _nonFaithfulColor = Color.red;
+
     [SerializeField]
     private SkinnedMeshRenderer _meshRenderer;
 
@@ -89,6 +98,33 @@ public class Follower : MonoBehaviour {
             rigidbody.AddForce(displacementNormalized * (force * (1.0f - Mathf.Clamp01(displacementMagnitude / radius))));
 
             FollowerState = State.GettingBlown;
+        }
+    }
+
+    private void EmitFaith()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, _faithRenewalRadius, 1 << LayerMask.NameToLayer("Follower"));
+        for (int i = 0; i < hits.Length; i++)
+        {
+            FaithTracker faithTracker = hits[i].GetComponent<FaithTracker>();
+            if (faithTracker != null)
+            {
+                faithTracker.InstillFaith(50.0f);
+            }
+        }
+    }
+
+    private void UpdateColour()
+    {
+        if (_faithtracker != null)
+        {
+            Color colour = new Color(
+            Mathf.Lerp(_nonFaithfulColor.r, _faithfulColor.r, _faithtracker.Faith / 100f),
+            Mathf.Lerp(_nonFaithfulColor.g, _faithfulColor.g, _faithtracker.Faith / 100f),
+            Mathf.Lerp(_nonFaithfulColor.b, _faithfulColor.b, _faithtracker.Faith / 100f),
+            Mathf.Lerp(_nonFaithfulColor.a, _faithfulColor.a, _faithtracker.Faith / 100f)
+            );
+            _meshRenderer.material.color = colour;    
         }
     }
 
@@ -146,10 +182,16 @@ public class Follower : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update() {
+        UpdateColour();
         switch (FollowerState)
 	    {
 	        case State.Leaving:
+	            if (_faithtracker != null && _faithtracker.Converted)
+	            {
+	                _hasDestination = false;
+                    FollowerState = State.Returning;
+	            }
 	            if (_currentStateTime == 0.0f)
 	            {
                     _animation.Play("Walk");
@@ -160,7 +202,6 @@ public class Follower : MonoBehaviour {
                             _destination = _exitPoints[Random.Range(0, _exitPoints.Length)];
                             _navAgent.SetDestination(_destination);
                             _hasDestination = true;
-                            
                         }
                     }
 	            }
@@ -211,6 +252,11 @@ public class Follower : MonoBehaviour {
 	            }
 	            break;
             case State.Returning:
+                if (_faithtracker != null && _faithtracker.Faithless)
+                {
+                    _hasDestination = false;
+                    FollowerState = State.Leaving;
+                }
                 if (_currentStateTime == 0.0f)
 	            {
                     _animation.CrossFade("Walk");
