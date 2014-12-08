@@ -28,24 +28,17 @@ public class Follower : MonoBehaviour {
         {
             if (_state != value)
             {
-                if (_state == State.GettingBlown)
-                {
-                    rigidbody.velocity = Vector3.zero;
-                    _navAgent.Resume();
-                }
-
                 _previousState = _state;
                 _state = value;
                 _currentStateTime = 0.0f;
-
-                if (_state == State.GettingBlown)
-                {
-                    _navAgent.Stop(true);
-                }
             }
         }
     }
 
+    public FaithTracker FaithTracker
+    {
+        get { return _faithtracker; }
+    }
 
     [SerializeField]
     private State _state;
@@ -99,15 +92,19 @@ public class Follower : MonoBehaviour {
             Vector3 displacement = transform.position - position;
             float displacementMagnitude = displacement.magnitude;
 
-            /*Vector3 displacementNormalized = new Vector3(displacement.x + Random.Range(-0.5f, 0.5f), 0.0f, displacement.z + Random.Range(-0.5f, 0.5f)).normalized;
-            displacementNormalized.y = 1.0f;*/
-
-            Vector3 displacementNormalized = new Vector3(0.0f, 1.0f, 0.0f);
+            Vector3 displacementNormalized = new Vector3(displacement.x + Random.Range(-0.5f, 0.5f), 0.0f, displacement.z + Random.Range(-0.5f, 0.5f)).normalized;
+            displacementNormalized.y = 10.0f;
 
             rigidbody.AddForce(displacementNormalized * (force * (1.0f - Mathf.Clamp01(displacementMagnitude / radius))));
 
-            FollowerState = State.GettingBlown;
+            Destroy(_navAgent);
+            FollowerState = State.Dead;
         }
+    }
+
+    public void Die()
+    {
+        FollowerState = State.Dead;
     }
 
     private void EmitFaith()
@@ -417,7 +414,7 @@ public class Follower : MonoBehaviour {
             case State.Dead:
                 if (_currentStateTime == 0.0f)
                 {
-                    _animation.CrossFade("Death");
+                    _animation.CrossFade("Flail");
                     animation.wrapMode = WrapMode.Once;
                     _audioSource.clip = null;
                     EmitFaith();
