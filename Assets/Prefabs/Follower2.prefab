@@ -1444,6 +1444,7 @@ GameObject:
   - 82: {fileID: 8200000}
   - 111: {fileID: 11100000}
   - 54: {fileID: 5400000}
+  - 114: {fileID: 11400004}
   m_Layer: 8
   m_Name: Follower2
   m_TagString: Untagged
@@ -2711,7 +2712,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!82 &8200000
 AudioSource:
@@ -2838,6 +2839,21 @@ MonoBehaviour:
   _navAgent: {fileID: 19500000}
   _damageScript: {fileID: 11400000}
   _animation: {fileID: 11100000}
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e124dfd003a09bb4f9906ca819b472ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startFaith: 60
+  _minLossPerSecond: 1
+  _maxLossPerSecond: 3
+  _escapeThreshold: 50
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1

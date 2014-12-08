@@ -41,6 +41,7 @@ public class Follower : MonoBehaviour {
         }
     }
 
+
     [SerializeField]
     private State _state;
 
@@ -58,6 +59,9 @@ public class Follower : MonoBehaviour {
 
     [SerializeField] 
     private DamageScript _damageScript;
+
+    [SerializeField] 
+    private FaithTracker _faithtracker;
 
     [SerializeField] 
     private Animation _animation;
@@ -224,7 +228,8 @@ public class Follower : MonoBehaviour {
             case State.GettingBlown:
 	            if (_currentStateTime == 0.0f)
 	            {
-    	                //animation
+                    animation.wrapMode = WrapMode.Loop;
+    	            animation.CrossFade("Flail");
                 }
             
                 if (_currentStateTime > 5.0f && rigidbody.velocity.magnitude < 1.0f)
@@ -271,10 +276,11 @@ public class Follower : MonoBehaviour {
                 if (_currentStateTime == 0.0f)
                 {
                     _animation.CrossFade("Death");
+                    animation.wrapMode = WrapMode.Once;
                     _audioSource.clip = null;
                     //_audioSource.Play();
                 }
-                if (_currentStateTime > 8.0f)
+                if (_currentStateTime > 4.0f)
                 {
                     if (_transparentMat != null)
                     {
@@ -285,7 +291,7 @@ public class Follower : MonoBehaviour {
                     colour.a -= 0.5f * Time.deltaTime;
                     _meshRenderer.renderer.material.color = colour;
                 }
-                if (_currentStateTime > 10.0f)
+                if (_currentStateTime > 5.0f)
                 {
                     Destroy(gameObject);
                 }
