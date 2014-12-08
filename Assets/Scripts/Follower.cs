@@ -291,7 +291,7 @@ public class Follower : MonoBehaviour {
 	                {
 	                    _hasDestination = true;
 	                    _destination = _idol.ClaimPositionOfPraise();
-                        Debug.DrawLine(_destination, new Vector3(_destination.x, _destination.y + 100, _destination.z), Color.magenta, 1000000f);
+	                    collider.enabled = false;
 	                    _navAgent.SetDestination(_destination);
 	                }
 	                else

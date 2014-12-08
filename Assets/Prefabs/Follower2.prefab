@@ -2833,11 +2833,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _state: 0
+  _faithRenewalRadius: 5
+  _faithfulColor: {r: .558823526, g: .558823526, b: 1, a: 1}
+  _nonFaithfulColor: {r: 1, g: .492647052, b: .492647052, a: 1}
   _meshRenderer: {fileID: 13700004}
   _transparentMat: {fileID: 0}
   _audioSource: {fileID: 8200000}
   _navAgent: {fileID: 19500000}
   _damageScript: {fileID: 11400000}
+  _faithtracker: {fileID: 11400004}
   _animation: {fileID: 11100000}
 --- !u!114 &11400004
 MonoBehaviour:
@@ -2854,6 +2858,7 @@ MonoBehaviour:
   _minLossPerSecond: 1
   _maxLossPerSecond: 3
   _escapeThreshold: 50
+  _faithfulThreshold: 80
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1
