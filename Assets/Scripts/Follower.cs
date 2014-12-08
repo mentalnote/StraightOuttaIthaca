@@ -23,9 +23,20 @@ public class Follower : MonoBehaviour {
         {
             if (_state != value)
             {
+                if (_state == State.GettingBlown)
+                {
+                    rigidbody.velocity = Vector3.zero;
+                    _navAgent.Resume();
+                }
+
                 _previousState = _state;
                 _state = value;
                 _currentStateTime = 0.0f;
+
+                if (_state == State.GettingBlown)
+                {
+                    _navAgent.Stop(true);
+                }
             }
         }
     }
@@ -61,6 +72,21 @@ public class Follower : MonoBehaviour {
     private GameObject sourceOfFear;
     private Idol _idol;
 
+    public void BlowAwayFrom(Vector3 position, float force, float radius)
+    {
+        if (FollowerState != State.GettingBlown)
+        {
+            Vector3 displacement = transform.position - position;
+            float displacementMagnitude = displacement.magnitude;
+
+            Vector3 displacementNormalized = new Vector3(displacement.x, 0.0f, displacement.z).normalized;
+            displacementNormalized.y = 1.0f;
+
+            rigidbody.AddForce(displacementNormalized * (force * (1.0f - Mathf.Clamp01(displacementMagnitude / radius))));
+
+            FollowerState = State.GettingBlown;
+        }
+    }
 
     public void SetIdol(Idol idolScript)
     {
@@ -117,7 +143,7 @@ public class Follower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    switch (FollowerState)
+        switch (FollowerState)
 	    {
 	        case State.Leaving:
 	            if (_currentStateTime == 0.0f)
@@ -198,8 +224,13 @@ public class Follower : MonoBehaviour {
             case State.GettingBlown:
 	            if (_currentStateTime == 0.0f)
 	            {
-	                //animation
-	            }
+    	                //animation
+                }
+            
+                if (_currentStateTime > 5.0f && rigidbody.velocity.magnitude < 1.0f)
+                {
+                    FollowerState = _previousState;
+                }
 	            break;
             case State.Praying:
                 if (_currentStateTime == 0.0f)

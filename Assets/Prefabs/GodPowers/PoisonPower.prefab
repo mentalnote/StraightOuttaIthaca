@@ -12,7 +12,6 @@ GameObject:
   - 199: {fileID: 19900000}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400000}
-  - 135: {fileID: 13500000}
   m_Layer: 0
   m_Name: PoisonPower
   m_TagString: Untagged
@@ -103,6 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 749a7f0d3e9d55a43be8ddc9de8831ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  radius: 5
+  damagePerSecond: 10
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -116,18 +117,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _totalCharges: 3
   _godGloryCost: 10
---- !u!135 &13500000
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 25
-  m_Center: {x: -.119148254, y: .13211444, z: 4.3231554}
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
