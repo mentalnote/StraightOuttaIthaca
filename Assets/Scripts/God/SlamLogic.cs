@@ -3,7 +3,7 @@
 sealed public class SlamLogic : MonoBehaviour
 {
 	[SerializeField]
-    private float radius = .0f;
+    private float radius = 5.0f;
 
     [SerializeField]
 	private float force = 1.0f;

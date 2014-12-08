@@ -15,7 +15,7 @@ public class Idol : MonoBehaviour
     void OnTriggerEnter(Collider collider)
     {
         Follower followerScript = collider.gameObject.GetComponent<Follower>();
-        if (followerScript != null)
+        if (followerScript != null && followerScript.FollowerState == Follower.State.Returning)
         {
            followerScript.SetIdol(this);
         }

@@ -95,8 +95,10 @@ public class Follower : MonoBehaviour {
             Vector3 displacement = transform.position - position;
             float displacementMagnitude = displacement.magnitude;
 
-            Vector3 displacementNormalized = new Vector3(displacement.x, 0.0f, displacement.z).normalized;
-            displacementNormalized.y = 1.0f;
+            /*Vector3 displacementNormalized = new Vector3(displacement.x + Random.Range(-0.5f, 0.5f), 0.0f, displacement.z + Random.Range(-0.5f, 0.5f)).normalized;
+            displacementNormalized.y = 1.0f;*/
+
+            Vector3 displacementNormalized = new Vector3(0.0f, 1.0f, 0.0f);
 
             rigidbody.AddForce(displacementNormalized * (force * (1.0f - Mathf.Clamp01(displacementMagnitude / radius))));
 
@@ -286,6 +288,7 @@ public class Follower : MonoBehaviour {
 	            {
 	                _animation.CrossFade("Flail");
 	            }
+                break;
             case State.Fleeing:
 	            if (_currentStateTime == 0.0f)
 	            {

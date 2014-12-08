@@ -11,7 +11,7 @@ public class Zeppelin : MonoBehaviour {
 	}
 
 	[SerializeField]
-	private GameObject people;
+	private Follower people;
 	[SerializeField]
 	private Vector3 dropLocation;
 	[SerializeField]
@@ -25,6 +25,9 @@ public class Zeppelin : MonoBehaviour {
 	private float step;
 	private int count;
 	private int numberOfPeople;
+
+    [SerializeField]
+    private Vector3 lookRotationOffset = Vector3.zero;
 
 	void Start () {
 		step = speed * Time.deltaTime;
@@ -52,8 +55,12 @@ public class Zeppelin : MonoBehaviour {
 				if (count < droppingDuration){
 					int dropIntervals = droppingDuration/numberOfPeople;
 					if (count % dropIntervals == 0){
-						Vector3 position = new Vector3(transform.position.x,transform.position.y-20,transform.position.z);
-						Instantiate(people,position,Quaternion.identity);
+                        NavMeshHit hit;
+						
+                        if (NavMesh.SamplePosition(transform.position, out hit, 500.0f, 1))
+                        {
+                            Instantiate(people,hit.position,Quaternion.identity);
+                        }
 					}
 					count++;
 					
@@ -70,5 +77,10 @@ public class Zeppelin : MonoBehaviour {
 				break;
 		}
 		transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+
+        if (targetPosition != transform.position)
+        {
+            transform.rotation = Quaternion.LookRotation(targetPosition - transform.position) * Quaternion.Euler(lookRotationOffset);
+        }
 	}
 }
