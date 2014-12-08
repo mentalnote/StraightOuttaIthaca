@@ -41,7 +41,7 @@ public class FaithTracker : MonoBehaviour
     private float _escapeThreshold = 50.0f;
 
     [SerializeField] 
-    private float _faithfulThreshold = 80.0f;
+    private float _faithfulThreshold = 70.0f;
 
     private float _faith;
     private float _timePassed;
