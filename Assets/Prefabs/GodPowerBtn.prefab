@@ -11,6 +11,7 @@ GameObject:
   - 222: {fileID: 22200000}
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
+  - 114: {fileID: 11400032}
   m_Layer: 5
   m_Name: GodPowerBtn
   m_TagString: Untagged
@@ -707,6 +708,25 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11400032
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f3b9ff3ca029e5459deb6bcc9d3539f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chargeTime: 0
+  _startingCharges: 0
+  _chargeProgress: {fileID: 0}
+  _indicatorColor: {r: .0274509806, g: .321568638, b: .0313725509, a: 1}
+  _chargeIndicators:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!222 &22200000
 CanvasRenderer:
   m_ObjectHideFlags: 1

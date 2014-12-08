@@ -13,12 +13,21 @@ public class CastScript : MonoBehaviour
     //Your selected god power
     [SerializeField] 
     private GameObject _selectedGodPower;
+
+    private SpellButtonLogic _spellButtonLogic;
+
     public void SetSelectedGodPower(GameObject godPower)
     {
         if (godPower != null && godPower.GetComponent<GodPowerStats>() != null)
         {
+            
             _selectedGodPower = godPower;
         }
+    }
+
+    public void SetSpellButtonLogic(GameObject spellButton)
+    {
+        _spellButtonLogic = spellButton.GetComponent<SpellButtonLogic>();
     }
 
 
@@ -36,10 +45,15 @@ public class CastScript : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                if (_selectedGodPower != null)
+                if (_selectedGodPower != null && (_spellButtonLogic == null || _spellButtonLogic.ExpendCharge()))
                 {
-                    var godPowerInstance = (GameObject)(Instantiate(_selectedGodPower, hit.point, Quaternion.LookRotation(new Vector3(hit.point.x, hit.point.y + 200, hit.point.z) - hit.point, Camera.main.transform.up)));
-                    
+                    var godPowerInstance =
+                        (GameObject)
+                            (Instantiate(_selectedGodPower, hit.point,
+                                Quaternion.LookRotation(
+                                    new Vector3(hit.point.x, hit.point.y + 200, hit.point.z) - hit.point,
+                                    Camera.main.transform.up)));
+
                     //lol, get the god particle
                     var godParticles = _selectedGodPower.GetComponent<ParticleSystem>();
                     if (godParticles != null)
@@ -48,6 +62,10 @@ public class CastScript : MonoBehaviour
                         Destroy(godPowerInstance, godParticles.duration + godParticles.startDelay + 1);
                     }
                     //set it back to null, the user has to "re-select" a new power through the menu
+                    _selectedGodPower = null;
+                }
+                else
+                {
                     _selectedGodPower = null;
                 }
             }
