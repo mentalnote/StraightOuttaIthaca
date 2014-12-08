@@ -6,6 +6,7 @@ public class Idol : MonoBehaviour
     [SerializeField] private float _offsetDistance;
     [SerializeField] private float _spacing;
     [SerializeField] private int _columns;
+    [SerializeField] private PrayerTracker _prayerTracker;
 
     private int _currentWorshippers;
     private Vector3 _offsetPosition;
@@ -28,6 +29,7 @@ public class Idol : MonoBehaviour
 
     public Vector3 ClaimPositionOfPraise()
     {
+        _prayerTracker.FollowerCount++;
         int row = _currentWorshippers == 0 ? 0 : _currentWorshippers / _columns;
         int column = _currentWorshippers == 0 ? 0 : _currentWorshippers % _columns;
         _currentWorshippers++;
