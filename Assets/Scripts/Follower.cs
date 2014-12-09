@@ -30,6 +30,7 @@ public class Follower : MonoBehaviour {
             {
                 _previousState = _state;
                 _state = value;
+                _stateChanged = true;
 
                 if (_state == State.Dead)
                 {
@@ -97,6 +98,7 @@ public class Follower : MonoBehaviour {
     private Idol _idol;
     private SceneArea _villageArea;
     private SpellButtonLogic _convertButtonLogic;
+    private bool _stateChanged;
 
     public void BlowAwayFrom(Vector3 position, float force, float radius)
     {
@@ -465,6 +467,13 @@ public class Follower : MonoBehaviour {
                 }
                 break;
 	    }
-        _currentStateTime += Time.deltaTime;
+	    if (_stateChanged)
+	    {
+	        _stateChanged = false;
+	    }
+	    else
+	    {
+            _currentStateTime += Time.deltaTime;
+	    }
 	}
 }
