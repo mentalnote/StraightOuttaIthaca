@@ -4495,7 +4495,7 @@ MonoBehaviour:
         m_MethodName: SetSelectedGodPower
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0,
+          m_ObjectArgument: {fileID: 100000, guid: 410c751cf9a922c45847240b38151e85,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
@@ -4508,7 +4508,7 @@ MonoBehaviour:
         m_MethodName: SetSpellButtonLogic
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 88295356}
+          m_ObjectArgument: {fileID: 175930174}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
@@ -6044,6 +6044,7 @@ GameObject:
   - 95: {fileID: 240932823}
   - 23: {fileID: 240932822}
   - 114: {fileID: 240932824}
+  - 114: {fileID: 240932825}
   m_Layer: 0
   m_Name: Zeppelin
   m_TagString: Untagged
@@ -6106,7 +6107,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 240932820}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7674f8624ffc5294a89387dbe5357e08, type: 3}
   m_Name: 
@@ -6114,9 +6115,21 @@ MonoBehaviour:
   people: {fileID: 11400002, guid: 28c9d69487169a64281be4cb4575629f, type: 2}
   dropLocation: {x: -149.100006, y: 87.3000031, z: -72.5999985}
   endLocation: {x: 15, y: 87.3000031, z: 515}
-  speed: 100
+  speed: 20
   droppingDuration: 10
   lookRotationOffset: {x: 0, y: -90, z: 0}
+--- !u!114 &240932825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 240932820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a2c7d8aa87708f44a84ca4db4de74f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interval: 10
 --- !u!1 &241148225
 GameObject:
   m_ObjectHideFlags: 0
@@ -11938,7 +11951,7 @@ MonoBehaviour:
         m_MethodName: SetSelectedGodPower
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0,
+          m_ObjectArgument: {fileID: 100000, guid: fecb940b6fe47574dbb9973842417c99,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
@@ -11951,7 +11964,7 @@ MonoBehaviour:
         m_MethodName: SetSpellButtonLogic
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 88295356}
+          m_ObjectArgument: {fileID: 466893741}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
@@ -17200,7 +17213,7 @@ MonoBehaviour:
         m_MethodName: SetSelectedGodPower
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0,
+          m_ObjectArgument: {fileID: 100000, guid: 4249d0ffb0c80f94296aa088b14b95cc,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
@@ -17213,7 +17226,7 @@ MonoBehaviour:
         m_MethodName: SetSpellButtonLogic
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 88295356}
+          m_ObjectArgument: {fileID: 646553484}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
@@ -25391,7 +25404,7 @@ MonoBehaviour:
         m_MethodName: SetSelectedGodPower
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0,
+          m_ObjectArgument: {fileID: 100000, guid: 06167277830960d4690e00044f54b1f7,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
@@ -25404,7 +25417,7 @@ MonoBehaviour:
         m_MethodName: SetSpellButtonLogic
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 88295356}
+          m_ObjectArgument: {fileID: 954868529}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
@@ -25583,7 +25596,7 @@ MonoBehaviour:
         m_MethodName: SetSelectedGodPower
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0,
+          m_ObjectArgument: {fileID: 100000, guid: 7a9fb1e530e8fe140b96f5655a1e5be5,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
@@ -25596,7 +25609,7 @@ MonoBehaviour:
         m_MethodName: SetSpellButtonLogic
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 88295356}
+          m_ObjectArgument: {fileID: 957704795}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
@@ -35219,7 +35232,7 @@ MonoBehaviour:
         m_MethodName: SetSelectedGodPower
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0,
+          m_ObjectArgument: {fileID: 100000, guid: 8365b622d7df22341aec009cf32c5fa4,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
@@ -35232,7 +35245,7 @@ MonoBehaviour:
         m_MethodName: SetSpellButtonLogic
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 88295356}
+          m_ObjectArgument: {fileID: 1392918231}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
@@ -44194,7 +44207,7 @@ MonoBehaviour:
         m_MethodName: SetSelectedGodPower
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0,
+          m_ObjectArgument: {fileID: 100000, guid: 44893d3dca49df748b55e631fe74934d,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
@@ -44207,7 +44220,7 @@ MonoBehaviour:
         m_MethodName: SetSpellButtonLogic
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 88295356}
+          m_ObjectArgument: {fileID: 1770625046}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
@@ -45217,7 +45230,7 @@ MonoBehaviour:
         m_MethodName: SetSelectedGodPower
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0,
+          m_ObjectArgument: {fileID: 100000, guid: 807df8fe4fdd65b4e862efd7dd11a016,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
@@ -45230,7 +45243,7 @@ MonoBehaviour:
         m_MethodName: SetSpellButtonLogic
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 88295356}
+          m_ObjectArgument: {fileID: 1837883563}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
@@ -47162,7 +47175,7 @@ Prefab:
     - target: {fileID: 11400234, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 88295356}
+      objectReference: {fileID: 175930174}
     - target: {fileID: 11400150, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -47195,7 +47208,7 @@ Prefab:
     - target: {fileID: 11400150, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 88295356}
+      objectReference: {fileID: 466893741}
     - target: {fileID: 11400318, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -47261,7 +47274,7 @@ Prefab:
     - target: {fileID: 11400146, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 88295356}
+      objectReference: {fileID: 646553484}
     - target: {fileID: 11400008, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -47294,7 +47307,7 @@ Prefab:
     - target: {fileID: 11400008, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0, type: 2}
+      objectReference: {fileID: 100000, guid: 7a9fb1e530e8fe140b96f5655a1e5be5, type: 2}
     - target: {fileID: 11400008, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: SetSpellButtonLogic
@@ -47307,7 +47320,7 @@ Prefab:
     - target: {fileID: 11400008, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 88295356}
+      objectReference: {fileID: 957704795}
     - target: {fileID: 11400226, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 2
@@ -47340,7 +47353,7 @@ Prefab:
     - target: {fileID: 11400226, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0, type: 2}
+      objectReference: {fileID: 100000, guid: 807df8fe4fdd65b4e862efd7dd11a016, type: 2}
     - target: {fileID: 11400226, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: SetSpellButtonLogic
@@ -47353,7 +47366,7 @@ Prefab:
     - target: {fileID: 11400226, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 88295356}
+      objectReference: {fileID: 1837883563}
     - target: {fileID: 11400012, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 2
@@ -47386,7 +47399,7 @@ Prefab:
     - target: {fileID: 11400012, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 88295356}
+      objectReference: {fileID: 1392918231}
     - target: {fileID: 11400074, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 2
@@ -47419,7 +47432,7 @@ Prefab:
     - target: {fileID: 11400074, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 88295356}
+      objectReference: {fileID: 858832088}
     - target: {fileID: 11400022, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 2
@@ -47452,7 +47465,7 @@ Prefab:
     - target: {fileID: 11400022, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0, type: 2}
+      objectReference: {fileID: 100000, guid: 44893d3dca49df748b55e631fe74934d, type: 2}
     - target: {fileID: 11400022, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: SetSpellButtonLogic
@@ -47465,7 +47478,7 @@ Prefab:
     - target: {fileID: 11400022, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 88295356}
+      objectReference: {fileID: 1770625046}
     - target: {fileID: 11400212, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 2
@@ -47498,7 +47511,7 @@ Prefab:
     - target: {fileID: 11400212, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0, type: 2}
+      objectReference: {fileID: 100000, guid: 06167277830960d4690e00044f54b1f7, type: 2}
     - target: {fileID: 11400212, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: SetSpellButtonLogic
@@ -47511,7 +47524,7 @@ Prefab:
     - target: {fileID: 11400212, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 88295356}
+      objectReference: {fileID: 954868529}
     - target: {fileID: 11400234, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_Interactable
       value: 0
@@ -47556,23 +47569,23 @@ Prefab:
     - target: {fileID: 11400234, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0, type: 2}
+      objectReference: {fileID: 100000, guid: 410c751cf9a922c45847240b38151e85, type: 2}
     - target: {fileID: 11400150, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0, type: 2}
+      objectReference: {fileID: 100000, guid: fecb940b6fe47574dbb9973842417c99, type: 2}
     - target: {fileID: 11400146, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0, type: 2}
+      objectReference: {fileID: 100000, guid: 4249d0ffb0c80f94296aa088b14b95cc, type: 2}
     - target: {fileID: 11400012, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0, type: 2}
+      objectReference: {fileID: 100000, guid: 8365b622d7df22341aec009cf32c5fa4, type: 2}
     - target: {fileID: 11400074, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0, type: 2}
+      objectReference: {fileID: 100000, guid: 45dcbb08c67e56647930896da9ec030b, type: 2}
     - target: {fileID: 11400150, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_Interactable
       value: 0
@@ -52550,7 +52563,7 @@ MonoBehaviour:
         m_MethodName: SetSelectedGodPower
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 100000, guid: 4b0682a30cac5304aad328a5563114e0,
+          m_ObjectArgument: {fileID: 100000, guid: 45dcbb08c67e56647930896da9ec030b,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
@@ -52563,7 +52576,7 @@ MonoBehaviour:
         m_MethodName: SetSpellButtonLogic
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 88295356}
+          m_ObjectArgument: {fileID: 858832088}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0

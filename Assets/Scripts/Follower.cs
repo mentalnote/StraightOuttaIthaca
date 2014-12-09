@@ -400,6 +400,7 @@ public class Follower : MonoBehaviour {
                     if (_navAgent.remainingDistance - Math.Abs(transform.position
                         .y - _navAgent.destination.y) <= _navAgent.stoppingDistance + 1.0f)
                     {
+                        if (_destinations.Count > 0)
                         {
                             _animation["PrayStart"].wrapMode = WrapMode.Once;
                             _animation.CrossFade("PrayStart");
