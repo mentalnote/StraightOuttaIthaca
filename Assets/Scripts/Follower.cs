@@ -358,7 +358,6 @@ public class Follower : MonoBehaviour {
 	            }
 	            break;
             case State.Returning:
-	            print(_currentStateTime);
 	            _navAgent.speed = _speed;
                 if (_faithtracker != null && _faithtracker.Faithless)
                 {
