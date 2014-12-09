@@ -1,7 +1,10 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using TreeEditor;
 using UnityEngine;
 using System.Collections;
+using Random = UnityEngine.Random;
 
 public class Follower : MonoBehaviour {
 
@@ -40,10 +43,7 @@ public class Follower : MonoBehaviour {
 
     public FaithTracker FaithTracker
     {
-        get
-        {
-            return _faithtracker;
-        }
+        get { return _faithtracker; }
     }
 
     [SerializeField]
@@ -86,20 +86,16 @@ public class Follower : MonoBehaviour {
     private AudioClip deathSoundEffect = null;
 
     private float _currentStateTime;
-    private Vector3[] _exitPoints;
+    private GameObject[] _exitPoints;
     private Vector3[] _prayPoints;
     private Vector3 _destination;
+    private Queue<Vector3> _destinations;
     private bool _hasDestination;
     private State _previousState = State.Leaving;
     private float _speed;
     private GameObject sourceOfFear;
     private Idol _idol;
     private SceneArea _villageArea;
-
-    public void Die()
-    {
-        FollowerState = State.Dead;
-    }
 
     public void BlowAwayFrom(Vector3 position, float force, float radius)
     {
@@ -114,9 +110,13 @@ public class Follower : MonoBehaviour {
             rigidbody.AddForce(displacementNormalized * (force * (1.0f - Mathf.Clamp01(displacementMagnitude / radius))));
 
             Destroy(_navAgent);
-
             FollowerState = State.Dead;
         }
+    }
+
+    public void Die()
+    {
+        FollowerState = State.Dead;
     }
 
     private void EmitFaith()
@@ -174,10 +174,10 @@ public class Follower : MonoBehaviour {
 	    GameObject exits = GameObject.Find("Exits");
 	    if (exits != null && exits.transform.childCount > 0)
 	    {
-            _exitPoints = new Vector3[exits.transform.childCount];
+            _exitPoints = new GameObject[exits.transform.childCount];
 	        for (int i = 0; i < exits.transform.childCount; i++)
 	        {
-	            _exitPoints[i] = exits.transform.GetChild(i).position;
+	            _exitPoints[i] = exits.transform.GetChild(i).gameObject;
 	        }
 	    }
 
@@ -211,99 +211,111 @@ public class Follower : MonoBehaviour {
         switch (FollowerState)
 	    {
 	        case State.Leaving:
-                if (_navAgent != null)
-                {
-                    _navAgent.speed = _speed;
-    	            if (_faithtracker != null && _faithtracker.Converted)
-    	            {
-    	                _hasDestination = false;
-                        FollowerState = State.Returning;
-    	            }
-    	            if (_currentStateTime == 0.0f)
-    	            {
-                        _animation.Play("Walk");
-                        if (!_hasDestination)
-                        {
-                            if (_exitPoints != null)
-                            {
-                                _destination = _exitPoints[Random.Range(0, _exitPoints.Length)];
-                                _navAgent.SetDestination(_destination);
-                                _hasDestination = true;
-                            }
-                        }
-    	            }
-                    if (!_navAgent.pathPending)
+                _navAgent.speed = _speed;
+	            if (_faithtracker != null && _faithtracker.Converted)
+	            {
+	                _hasDestination = false;
+                    FollowerState = State.Returning;
+	            }
+	            if (_currentStateTime == 0.0f)
+	            {
+                    _animation.Play("Walk");
+                    if (!_hasDestination)
                     {
-                        if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
+                        if (_exitPoints != null)
                         {
-                            if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
+                            GameObject exit = _exitPoints[Random.Range(0, _exitPoints.Length)];
+                            Vector3[] vecs = exit.GetComponent<GameObjectArray>().getPositions();
+                            _destinations = new Queue<Vector3>();
+                            for (int i = 0; i < vecs.Length; i++)
                             {
-                                Destroy(gameObject);
-                                //FollowerState = State.Dead;
+                                _destinations.Enqueue(vecs[i]);
                             }
+                            _navAgent.SetDestination(_destinations.Dequeue());
+                            _hasDestination = true;
                         }
+                    }
+	            }
+                if (!_navAgent.pathPending)
+                {
+                    if (_navAgent.remainingDistance - Math.Abs(transform.position
+                        .y - _navAgent.destination.y) <= _navAgent.stoppingDistance + 1.0f)
+                    {
+                        //if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
+                        //{
+                            if (_destinations.Count > 0)
+                            {
+                                
+                                _navAgent.SetDestination(_destinations.Dequeue());
+                            }
+                            else
+                            {
+                                Destroy(gameObject);    
+                            }
+                            //FollowerState = State.Dead;
+                        //}
                     }
                 }
 	            break;
             case State.Wandering:
-                if (_navAgent != null)
+                if (_faithtracker != null && _faithtracker.Converted)
+	            {
+	                _hasDestination = false;
+                    FollowerState = State.Returning;
+	            }
+                if (_faithtracker != null && _faithtracker.Faithless)
                 {
-                    if (_faithtracker != null && _faithtracker.Converted)
-    	            {
-    	                _hasDestination = false;
-                        FollowerState = State.Returning;
-    	            }
-                    if (_faithtracker != null && _faithtracker.Faithless)
+                    _hasDestination = false;
+                    FollowerState = State.Leaving;
+                }
+	            if (_currentStateTime == 0.0f)
+	            {
+                    _animation.Play("Walk");
+                    if (!_hasDestination)
                     {
-                        _hasDestination = false;
-                        FollowerState = State.Leaving;
+                        if (_exitPoints != null && _villageArea != null)
+                        {
+                            _destination = _villageArea.GetRandomPos();
+                            _navAgent.SetDestination(_destination);
+                            _hasDestination = true;
+                        }
                     }
-    	            if (_currentStateTime == 0.0f)
-    	            {
-                        _animation.Play("Walk");
-                        if (!_hasDestination)
-                        {
-                            if (_exitPoints != null && _villageArea != null)
-                            {
-                                _destination = _villageArea.GetRandomPos();
-                                _navAgent.SetDestination(_destination);
-                                _hasDestination = true;
-                            }
-                        }
-    	            }
-                    if (!_navAgent.pathPending)
+	            }
+                if (!_navAgent.pathPending)
+                {
+                    if (_navAgent.remainingDistance - Math.Abs(transform.position
+                        .y - _navAgent.destination.y) <= _navAgent.stoppingDistance + 1.0f)
                     {
-                        if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
+                        //if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
+                        //{
+                        if (_exitPoints != null && _villageArea != null)
                         {
-                            if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
+                            _destination = _villageArea.GetRandomPos();
+                            _navAgent.SetDestination(_destination);
+                            if (Random.Range(0, 2) == 0)
                             {
-                                if (_exitPoints != null && _villageArea != null)
-                                {
-                                    _destination = _villageArea.GetRandomPos();
-                                    _navAgent.SetDestination(_destination);
-                                    if (Random.Range(0, 2) == 0)
-                                    {
-                                        FollowerState = State.Dazed;
-                                    }
-                                }
+                                FollowerState = State.Dazed;
                             }
                         }
+                        else
+                        {
+                            Destroy(gameObject);
+                        }
+                        //FollowerState = State.Dead;
+                        //}
                     }
                 }
 	            break;
             case State.Dazed:
-	            if (_navAgent != null)
-                {
-                    if (_currentStateTime == 0.0f)
-    	            {
-    	                _navAgent.speed = 0.0f;
-    	            }
-    	            if (_currentStateTime >= 4.0f)
-    	            {
-    	                _navAgent.speed = _speed;
-                        FollowerState = _previousState;
-    	            }
-                }
+	            if (_currentStateTime == 0.0f)
+	            {
+	                _navAgent.speed = 0.0f;
+	            }
+	            if (_currentStateTime >= 4.0f)
+	            {
+	                _navAgent.speed = _speed;
+                    FollowerState = _previousState;
+	            }
 	            break;
             case State.Dropping:
 	            if (_currentStateTime == 0.0f)
@@ -312,54 +324,48 @@ public class Follower : MonoBehaviour {
 	            }
                 break;
             case State.Fleeing:
-                if (_navAgent != null)
-                {
-    	            if (_currentStateTime == 0.0f)
-    	            {
-                        _animation.CrossFade("Run");
-    	                if (sourceOfFear != null)
-    	                {
-    	                    Vector3 runDirection = sourceOfFear.transform.position - transform.position;
-    	                    _navAgent.SetDestination(transform.position + (runDirection.normalized * 50));
-    	                    _navAgent.speed = _speed*1.5f;
-    	                    _hasDestination = true;
-    	                }
-    	                else
-    	                {
-                            FollowerState = _previousState;
-    	                }    
-    	            }
-    	            if (_currentStateTime >= 4.0f)
-    	            {
-                        _hasDestination = false;
-                        _navAgent.speed = _speed;
+	            if (_currentStateTime == 0.0f)
+	            {
+                    _animation.CrossFade("Run");
+	                if (sourceOfFear != null)
+	                {
+	                    Vector3 runDirection = sourceOfFear.transform.position - transform.position;
+	                    _navAgent.SetDestination(transform.position + (runDirection.normalized * 50));
+	                    _navAgent.speed = _speed*1.5f;
+	                    _hasDestination = true;
+	                }
+	                else
+	                {
                         FollowerState = _previousState;
-                    }
-                }
+	                }    
+	            }
+	            if (_currentStateTime >= 4.0f)
+	            {
+                    _hasDestination = false;
+                    _navAgent.speed = _speed;
+                    FollowerState = _previousState;
+	            }
 	            break;
             case State.Returning:
-                if (_navAgent != null)
+	            _navAgent.speed = _speed;
+                if (_faithtracker != null && _faithtracker.Faithless)
                 {
-    	            _navAgent.speed = _speed;
-                    if (_faithtracker != null && _faithtracker.Faithless)
-                    {
-                        _hasDestination = false;
-                        FollowerState = State.Leaving;
-                    }
-                    if (_currentStateTime == 0.0f)
-    	            {
-                        _animation.CrossFade("Walk");
-                        if (!_hasDestination)
-                        {
-                            if (_prayPoints != null)
-                            {
-                                _destination = _prayPoints[Random.Range(0, _prayPoints.Length)];
-                                _navAgent.SetDestination(_destination);
-                                _hasDestination = true;
-                            }
-                        }
-    	            }
+                    _hasDestination = false;
+                    FollowerState = State.Leaving;
                 }
+                if (_currentStateTime == 0.0f)
+	            {
+                    _animation.CrossFade("Walk");
+                    if (!_hasDestination)
+                    {
+                        if (_prayPoints != null)
+                        {
+                            _destination = _prayPoints[Random.Range(0, _prayPoints.Length)];
+                            _navAgent.SetDestination(_destination);
+                            _hasDestination = true;
+                        }
+                    }
+	            }
                 break;
             case State.GettingBlown:
 	            if (_currentStateTime == 0.0f)
@@ -374,43 +380,46 @@ public class Follower : MonoBehaviour {
                 }
 	            break;
             case State.Praying:
-                if (_navAgent != null)
+                if (_currentStateTime == 0.0f)
                 {
-                    if (_currentStateTime == 0.0f)
+                    _animation.CrossFade("Walk");
+	                if (_idol != null)
+	                {
+	                    _hasDestination = true;
+	                    _destination = _idol.ClaimPositionOfPraise();
+	                    collider.enabled = false;
+	                    _navAgent.SetDestination(_destination);
+	                }
+	                else
+	                {
+	                    FollowerState = _previousState;
+	                }
+	            }
+                if (!_navAgent.pathPending && _hasDestination)
+                {
+                    if (_navAgent.remainingDistance - Math.Abs(transform.position
+                        .y - _navAgent.destination.y) <= _navAgent.stoppingDistance + 1.0f)
                     {
-                        _animation.CrossFade("Walk");
-    	                if (_idol != null)
-    	                {
-    	                    _hasDestination = true;
-    	                    _destination = _idol.ClaimPositionOfPraise();
-    	                    collider.enabled = false;
-    	                    _navAgent.SetDestination(_destination);
-    	                }
-    	                else
-    	                {
-    	                    FollowerState = _previousState;
-    	                }
-    	            }
-                    if (!_navAgent.pathPending && _hasDestination)
-                    {
-                        if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
                         {
-                            if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
-                            {
-                                _animation["PrayStart"].wrapMode = WrapMode.Once;
-                                _animation.CrossFade("PrayStart");
-                                _animation.PlayQueued("PrayRepeat");
-                                _hasDestination = false;
-                                _currentStateTime = 10.0f;
-
-                                AudioSource.PlayClipAtPoint(praySoundEffect, transform.position);
-                            }
+                            _animation["PrayStart"].wrapMode = WrapMode.Once;
+                            _animation.CrossFade("PrayStart");
+                            _animation.PlayQueued("PrayRepeat");
+                            _hasDestination = false;
+                            _currentStateTime = 10.0f;
+							
+							AudioSource.PlayClipAtPoint(praySoundEffect, transform.position);
                         }
+                        else
+                        {
+                            Destroy(gameObject);
+                        }
+                        //FollowerState = State.Dead;
+                        //}
                     }
-    	            if (!_hasDestination && _currentStateTime <= 11.0f)
-    	            {
-                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_idol.transform.position - transform.position), (_currentStateTime - 10.0f) / 1.0f);
-                    }
+                }
+	            if (!_hasDestination && _currentStateTime <= 11.0f)
+	            {
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_idol.transform.position - transform.position), (_currentStateTime - 10.0f) / 1.0f);
                 }
 	            break;
             case State.Dead:
@@ -419,6 +428,7 @@ public class Follower : MonoBehaviour {
                     _animation.CrossFade("Flail");
                     animation.wrapMode = WrapMode.Once;
                     _audioSource.clip = null;
+                    EmitFaith();
                     //_audioSource.Play();
                 }
                 if (_currentStateTime > 4.0f)
