@@ -96,6 +96,7 @@ public class Follower : MonoBehaviour {
     private GameObject sourceOfFear;
     private Idol _idol;
     private SceneArea _villageArea;
+    private SpellButtonLogic _convertButtonLogic;
 
     public void BlowAwayFrom(Vector3 position, float force, float radius)
     {
@@ -168,6 +169,7 @@ public class Follower : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
+        _convertButtonLogic = GameObject.Find("ConvertBtn").GetComponent<SpellButtonLogic>();
 	    _animation["Walk"].speed = 2f;
         _animation.wrapMode = WrapMode.Loop;
 	    _speed = _navAgent.speed;
@@ -216,6 +218,7 @@ public class Follower : MonoBehaviour {
 	            {
 	                _hasDestination = false;
                     FollowerState = State.Returning;
+	                break;
 	            }
 	            if (_currentStateTime == 0.0f)
 	            {
@@ -262,11 +265,13 @@ public class Follower : MonoBehaviour {
 	            {
 	                _hasDestination = false;
                     FollowerState = State.Returning;
+                    break;
 	            }
                 if (_faithtracker != null && _faithtracker.Faithless)
                 {
                     _hasDestination = false;
                     FollowerState = State.Leaving;
+                    break;
                 }
 	            if (_currentStateTime == 0.0f)
 	            {
@@ -295,6 +300,7 @@ public class Follower : MonoBehaviour {
                             if (Random.Range(0, 2) == 0)
                             {
                                 FollowerState = State.Dazed;
+                                break;
                             }
                         }
                         else
@@ -315,6 +321,7 @@ public class Follower : MonoBehaviour {
 	            {
 	                _navAgent.speed = _speed;
                     FollowerState = _previousState;
+                    break;
 	            }
 	            break;
             case State.Dropping:
@@ -337,6 +344,7 @@ public class Follower : MonoBehaviour {
 	                else
 	                {
                         FollowerState = _previousState;
+                        break;
 	                }    
 	            }
 	            if (_currentStateTime >= 4.0f)
@@ -344,20 +352,25 @@ public class Follower : MonoBehaviour {
                     _hasDestination = false;
                     _navAgent.speed = _speed;
                     FollowerState = _previousState;
+                    break;
 	            }
 	            break;
             case State.Returning:
+	            print(_currentStateTime);
 	            _navAgent.speed = _speed;
                 if (_faithtracker != null && _faithtracker.Faithless)
                 {
                     _hasDestination = false;
                     FollowerState = State.Leaving;
+                    break;
                 }
                 if (_currentStateTime == 0.0f)
-	            {
+                {
+                    print("TEST");
                     _animation.CrossFade("Walk");
                     if (!_hasDestination)
                     {
+                        print(_prayPoints);
                         if (_prayPoints != null)
                         {
                             _destination = _prayPoints[Random.Range(0, _prayPoints.Length)];
@@ -377,6 +390,7 @@ public class Follower : MonoBehaviour {
                 if (_currentStateTime > 5.0f && rigidbody.velocity.magnitude < 1.0f)
                 {
                     FollowerState = _previousState;
+                    break;
                 }
 	            break;
             case State.Praying:
@@ -393,6 +407,7 @@ public class Follower : MonoBehaviour {
 	                else
 	                {
 	                    FollowerState = _previousState;
+                        break;
 	                }
 	            }
                 if (!_navAgent.pathPending && _hasDestination)
@@ -430,6 +445,7 @@ public class Follower : MonoBehaviour {
                     animation.wrapMode = WrapMode.Once;
                     _audioSource.clip = null;
                     EmitFaith();
+                    _convertButtonLogic.TimePassed += 1000;
                     //_audioSource.Play();
                 }
                 if (_currentStateTime > 4.0f)

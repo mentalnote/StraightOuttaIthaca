@@ -26044,19 +26044,19 @@ MonoBehaviour:
   - SpellButton: {fileID: 1392918233}
     FollowersRequirement: 10
   - SpellButton: {fileID: 88295358}
-    FollowersRequirement: 25
+    FollowersRequirement: 20
   - SpellButton: {fileID: 175930176}
-    FollowersRequirement: 50
-  - SpellButton: {fileID: 646553486}
     FollowersRequirement: 40
+  - SpellButton: {fileID: 646553486}
+    FollowersRequirement: 30
   - SpellButton: {fileID: 957704799}
-    FollowersRequirement: -1
+    FollowersRequirement: 5
   - SpellButton: {fileID: 1837883565}
-    FollowersRequirement: -1
+    FollowersRequirement: 5
   - SpellButton: {fileID: 1770625052}
-    FollowersRequirement: -1
+    FollowersRequirement: 0
   - SpellButton: {fileID: 954868531}
-    FollowersRequirement: -1
+    FollowersRequirement: 50
   _titleText: {fileID: 1222717805}
   _titles:
   - Title: Demigod
@@ -44270,8 +44270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f3b9ff3ca029e5459deb6bcc9d3539f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chargeTime: 10
-  _startingCharges: 0
+  _chargeTime: 5000
+  _startingCharges: 1
   _spellButton: {fileID: 1770625052}
   _chargeProgress: {fileID: 332664706}
   _indicatorColor: {r: .0274509806, g: .321568638, b: .0313725509, a: 1}
@@ -47593,6 +47593,34 @@ Prefab:
     - target: {fileID: 22400010, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400336, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
+      propertyPath: _spells.Array.data[8].FollowersRequirement
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400336, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
+      propertyPath: _spells.Array.data[7].FollowersRequirement
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400336, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
+      propertyPath: _spells.Array.data[5].FollowersRequirement
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400336, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
+      propertyPath: _spells.Array.data[3].FollowersRequirement
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400336, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
+      propertyPath: _spells.Array.data[9].FollowersRequirement
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400336, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
+      propertyPath: _spells.Array.data[4].FollowersRequirement
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400336, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}
+      propertyPath: _spells.Array.data[6].FollowersRequirement
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6e3de818cecb1804cb741354a60f9371, type: 2}

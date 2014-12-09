@@ -4,6 +4,13 @@ using UnityEngine.UI;
 
 public class SpellButtonLogic : MonoBehaviour
 {
+
+    public float TimePassed
+    {
+        get { return _timePassed; }
+        set { _timePassed = value; }
+    }
+
     [SerializeField] private float _chargeTime = 10.0f;
     [SerializeField] private int _startingCharges;
     [SerializeField] private Button _spellButton;
