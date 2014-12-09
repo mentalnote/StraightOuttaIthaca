@@ -2843,8 +2843,6 @@ MonoBehaviour:
   _damageScript: {fileID: 11400000}
   _faithtracker: {fileID: 11400004}
   _animation: {fileID: 11100000}
-  blownAwaySoundEffect: {fileID: 8300000, guid: e76d2f8a7c5e59d459ae3d71a1b19710,
-    type: 3}
   praySoundEffect: {fileID: 8300000, guid: 0c69b8c49572e5c4fa09a73a1b24231c, type: 3}
   deathSoundEffect: {fileID: 8300000, guid: 48ec1896d14d2b646a6da4f7ed1a00e7, type: 3}
 --- !u!114 &11400004
@@ -3011,7 +3009,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 100190}
   m_Enabled: 1
   m_Radius: .200000107
-  m_Speed: 10
+  m_Speed: 20
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

@@ -34,7 +34,7 @@ public class Zeppelin : MonoBehaviour {
 		state = delivery_state.delivering;
 		targetPosition = dropLocation;
 		int count = 0;
-		numberOfPeople = 4;
+		numberOfPeople = 4 + (int)(Time.timeSinceLevelLoad / 60.0f);
 	}	
 	void setNumberOfPeople(int number){
 		numberOfPeople = number;
