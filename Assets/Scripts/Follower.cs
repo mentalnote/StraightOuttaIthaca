@@ -291,7 +291,7 @@ public class Follower : MonoBehaviour {
                 if (!_navAgent.pathPending)
                 {
                     if (_navAgent.remainingDistance - Math.Abs(transform.position
-                        .y - _navAgent.destination.y) <= _navAgent.stoppingDistance + 1.0f)
+                        .y - _navAgent.destination.y) <= _navAgent.stoppingDistance + 2.0f)
                     {
                         //if (!_navAgent.hasPath || _navAgent.velocity.sqrMagnitude == 0.0f)
                         //{
