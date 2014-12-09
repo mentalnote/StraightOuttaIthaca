@@ -49,13 +49,13 @@ public class Follower : MonoBehaviour {
     [SerializeField]
     private State _state;
 
-    [SerializeField] 
+    [SerializeField]
     private float _faithRenewalRadius = 5.0f;
 
-    [SerializeField] 
+    [SerializeField]
     private Color _faithfulColor = Color.blue;
 
-    [SerializeField] 
+    [SerializeField]
     private Color _nonFaithfulColor = Color.red;
 
     [SerializeField]
