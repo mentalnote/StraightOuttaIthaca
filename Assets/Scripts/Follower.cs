@@ -367,11 +367,9 @@ public class Follower : MonoBehaviour {
                 }
                 if (_currentStateTime == 0.0f)
                 {
-                    print("TEST");
                     _animation.CrossFade("Walk");
                     if (!_hasDestination)
                     {
-                        print(_prayPoints);
                         if (_prayPoints != null)
                         {
                             _destination = _prayPoints[Random.Range(0, _prayPoints.Length)];
@@ -402,8 +400,9 @@ public class Follower : MonoBehaviour {
 	                {
 	                    _hasDestination = true;
 	                    _destination = _idol.ClaimPositionOfPraise();
-	                    collider.enabled = false;
+                        collider.enabled = false;
 	                    _navAgent.SetDestination(_destination);
+	                    _currentStateTime = 0.01f;
 	                }
 	                else
 	                {
@@ -414,7 +413,7 @@ public class Follower : MonoBehaviour {
                 if (!_navAgent.pathPending && _hasDestination)
                 {
                     if (_navAgent.remainingDistance - Math.Abs(transform.position
-                        .y - _navAgent.destination.y) <= _navAgent.stoppingDistance + 1.0f)
+                        .y - _navAgent.destination.y) <= _navAgent.stoppingDistance + 4.0f)
                     {
                         if (_destinations.Count > 0)
                         {
