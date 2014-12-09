@@ -255,6 +255,7 @@ public class Follower : MonoBehaviour {
                             }
                             else
                             {
+                                GameObject.Find("God").GetComponent<GameOverLogic>().EscapeNum++;
                                 Destroy(gameObject);    
                             }
                             //FollowerState = State.Dead;
