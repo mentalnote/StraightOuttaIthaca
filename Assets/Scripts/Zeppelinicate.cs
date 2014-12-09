@@ -8,7 +8,7 @@ public class Zeppelinicate : MonoBehaviour
 
     private void Update()
     {
-        if (Time.timeSinceLevelLoad % interval <= Time.deltaTime)
+        if (Time.timeSinceLevelLoad != 0.0f && Time.timeSinceLevelLoad % interval <= Time.deltaTime)
         {
             GameObject zeppelin = (GameObject)Instantiate(gameObject, transform.position, transform.rotation);
 
