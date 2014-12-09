@@ -137,7 +137,7 @@ public class Follower : MonoBehaviour {
 
     private void UpdateColour()
     {
-        if (_faithtracker != null)
+        if (_faithtracker != null && FollowerState != State.Praying)
         {
             Color colour = new Color(
             Mathf.Lerp(_nonFaithfulColor.r, _faithfulColor.r, _faithtracker.Faith / 100f),
@@ -400,7 +400,7 @@ public class Follower : MonoBehaviour {
 	                {
 	                    _hasDestination = true;
 	                    _destination = _idol.ClaimPositionOfPraise();
-                        collider.enabled = false;
+	                    rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 	                    _navAgent.SetDestination(_destination);
 	                    _currentStateTime = 0.01f;
 	                }
@@ -422,6 +422,8 @@ public class Follower : MonoBehaviour {
                             _animation.PlayQueued("PrayRepeat");
                             _hasDestination = false;
                             _currentStateTime = 10.0f;
+                            _navAgent.speed = 0.0f;
+                            collider.enabled = false;
 							
 							AudioSource.PlayClipAtPoint(praySoundEffect, transform.position);
                         }
