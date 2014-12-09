@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class PrayerTracker : MonoBehaviour
 {
-
     [System.Serializable]
     public class TitleEntry
     {
         public string Title;
         public int FollowersRequirement;
+        public AudioClip SoundEffect;
     }
 
     [System.Serializable]
@@ -37,6 +37,11 @@ public class PrayerTracker : MonoBehaviour
             {
                 _titleText.text = _titleDictionary[_followerCount];
             }
+            if (_soundEffectDictionary.ContainsKey(_followerCount))
+            {
+                AudioSource.PlayClipAtPoint(_soundEffectDictionary[_followerCount], Vector3.zero);
+                _soundEffectDictionary.Remove(_followerCount);
+            }
         }
     }
 
@@ -46,13 +51,15 @@ public class PrayerTracker : MonoBehaviour
 
     private int _followerCount;
     private Dictionary<int, List<Button>> _spellDictionary; 
-    private Dictionary<int, string> _titleDictionary; 
+    private Dictionary<int, string> _titleDictionary;
+    private Dictionary<int, AudioClip> _soundEffectDictionary;
 
 	// Use this for initialization
     private void Start()
     {
         _spellDictionary = new Dictionary<int, List<Button>>();
         _titleDictionary = new Dictionary<int, string>();
+        _soundEffectDictionary = new Dictionary<int, AudioClip>();
         for (int i = 0; i < _spells.Length; i++)
         {
             if (!_spellDictionary.ContainsKey(_spells[i].FollowersRequirement))
@@ -64,6 +71,7 @@ public class PrayerTracker : MonoBehaviour
         for (int i = 0; i < _titles.Length; i++)
         {
             _titleDictionary[_titles[i].FollowersRequirement] = _titles[i].Title;
+            _soundEffectDictionary[_titles[i].FollowersRequirement] = _titles[i].SoundEffect;
         }
     FollowerCount = _followerCount;
 	}

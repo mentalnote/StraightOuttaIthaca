@@ -57,7 +57,7 @@ public class Zeppelin : MonoBehaviour {
 					if (count % dropIntervals == 0){
                         NavMeshHit hit;
 						
-                        if (NavMesh.SamplePosition(transform.position, out hit, 500.0f, 1))
+                        if (NavMesh.SamplePosition(transform.position + new Vector3(Random.Range(-15.0f, 15.0f), 0.0f, Random.Range(-15.0f, 15.0f)), out hit, 500.0f, 1))
                         {
                             Instantiate(people,hit.position,Quaternion.identity);
                         }

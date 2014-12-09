@@ -415,22 +415,15 @@ public class Follower : MonoBehaviour {
                     if (_navAgent.remainingDistance - Math.Abs(transform.position
                         .y - _navAgent.destination.y) <= _navAgent.stoppingDistance + 4.0f)
                     {
-                        if (_destinations.Count > 0)
-                        {
-                            _animation["PrayStart"].wrapMode = WrapMode.Once;
-                            _animation.CrossFade("PrayStart");
-                            _animation.PlayQueued("PrayRepeat");
-                            _hasDestination = false;
-                            _currentStateTime = 10.0f;
-                            _navAgent.speed = 0.0f;
-                            collider.enabled = false;
-							
-							AudioSource.PlayClipAtPoint(praySoundEffect, transform.position);
-                        }
-                        else
-                        {
-                            Destroy(gameObject);
-                        }
+                        _animation["PrayStart"].wrapMode = WrapMode.Once;
+                        _animation.CrossFade("PrayStart");
+                        _animation.PlayQueued("PrayRepeat");
+                        _hasDestination = false;
+                        _currentStateTime = 10.0f;
+                        _navAgent.speed = 0.0f;
+                        collider.enabled = false;
+						
+						AudioSource.PlayClipAtPoint(praySoundEffect, transform.position);
                         //FollowerState = State.Dead;
                         //}
                     }

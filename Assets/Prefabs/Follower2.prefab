@@ -2832,7 +2832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1137b222662707941bc94e89309229d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _state: 0
+  _state: 7
   _faithRenewalRadius: 5
   _faithfulColor: {r: .558823526, g: .558823526, b: 1, a: 1}
   _nonFaithfulColor: {r: 1, g: .492647052, b: .492647052, a: 1}

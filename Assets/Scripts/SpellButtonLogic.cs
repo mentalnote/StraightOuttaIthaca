@@ -4,6 +4,13 @@ using UnityEngine.UI;
 
 public class SpellButtonLogic : MonoBehaviour
 {
+    public int CurrentCharges
+    {
+        get
+        {
+            return _currentCharges;
+        }
+    }
 
     public float TimePassed
     {
