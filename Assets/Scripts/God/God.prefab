@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a67f9fd112733469f69fcef2fc584f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _numToLose: 20
+  _numToLose: 5
   _level: GameOver
 --- !u!1001 &100100000
 Prefab:
